@@ -1,0 +1,39 @@
+backend:
+  name: git-gateway
+  branch: main
+
+# Папка, куда CMS загружает изображения проектов
+media_folder: "images/uploads"
+public_folder: "/images/uploads"
+
+# Язык интерфейса
+locale: "ru"
+
+collections:
+  - name: "projects"
+    label: "Проекты портфолио"
+    label_singular: "Проект"
+    # Все проекты хранятся ОДНИМ файлом — тем же, который читает сайт.
+    # Это убирает необходимость в "сборке" сайта: что сохранили в CMS,
+    # то сразу же видно на живом сайте после публикации Netlify.
+    files:
+      - name: "projects"
+        label: "Список проектов"
+        file: "projects.json"
+        format: "json"
+        fields:
+          - name: "projects"
+            label: "Проекты"
+            label_singular: "Проект"
+            widget: "list"
+            summary: "{{fields.title}} — {{fields.style}}, {{fields.area}} м²"
+            fields:
+              - { name: "title", label: "Название проекта", widget: "string", hint: "Например: Constellation" }
+              - { name: "cover", label: "Обложка (главное фото)", widget: "image", hint: "Фото для карточки на главной странице" }
+              - { name: "style", label: "Стиль", widget: "string", hint: "Например: Современная классика" }
+              - { name: "area", label: "Площадь (м²)", widget: "number", value_type: "int", min: 1, hint: "Только число, например 285" }
+              - { name: "location", label: "ЖК / Локация", widget: "string", required: false, hint: "Необязательно. Например: New Town" }
+              - { name: "order", label: "Порядок показа", widget: "number", value_type: "int", default: 99, hint: "Чем меньше число, тем выше проект в списке" }
+              - { name: "page", label: "Ссылка на страницу проекта", widget: "string", required: false, hint: "Необязательно. Например: projects/my-project.html — если у проекта есть отдельная страница" }
+              - { name: "gallery", label: "Галерея фото", widget: "list", required: false, field: { name: "image", label: "Фото", widget: "image" }, hint: "Дополнительные фото проекта (необязательно)" }
+              - { name: "description", label: "Описание проекта", widget: "text", required: false, hint: "Необязательно. Краткий рассказ о проекте" }
