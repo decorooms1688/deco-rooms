@@ -1,0 +1,9 @@
+# Настройки публикации сайта DECOROOMS на Netlify
+[build]
+  publish = "."
+
+# Красивые адреса страниц и корректная отдача
+[[redirects]]
+  from = "/admin"
+  to = "/admin/index.html"
+  status = 200

@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="DECOROOMS — Interior Design Studio. Дизайн интерьера и экстерьера в Ташкенте.">
+<title>DECOROOMS — Interior Design Studio · Tashkent</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&family=Josefin+Sans:wght@300;400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --dark:  #440D15;
+  --dark2: #370A11;
+  --dark3: #2B080D;
+  --cream: #F5EDE3;
+  --offwh: #FDF9F4;
+  --white: #FFFFFF;
+  --w60:   rgba(255,255,255,.6);
+  --w30:   rgba(255,255,255,.3);
+  --w12:   rgba(255,255,255,.12);
+  --d60:   rgba(26,5,8,.6);
+  --d15:   rgba(26,5,8,.15);
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --sans:  'DM Sans', system-ui, sans-serif;
+  --brand: 'Montserrat', sans-serif;
+  --ease:  cubic-bezier(0.25,0.1,0.25,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--dark);color:var(--white);overflow-x:hidden}
+img{display:block;width:100%}
+a{text-decoration:none;color:inherit}
+
+/* ─────────────────────────── BRAND LOGO ─────────────────────────── */
+.brand{
+  display:flex;align-items:center;gap:16px;
+  cursor:pointer;user-select:none;
+}
+.brand-wm{display:flex;flex-direction:column;line-height:.92}
+.brand-deco{
+  font-family:var(--brand);color:var(--white);font-weight:900;
+  font-size:2.1rem;letter-spacing:.06em;
+}
+.brand-rooms{
+  display:flex;align-items:center;
+  font-family:var(--brand);color:var(--white);font-weight:900;
+  font-size:2.1rem;letter-spacing:.06em;
+}
+.oo{
+  display:inline-block;
+  height:.82em;   /* matches cap-height of Bebas Neue */
+  width:auto;
+  position:relative;top:.04em;
+}
+.brand-bar{
+  width:2px;height:3.6rem;
+  background:var(--white);flex-shrink:0;
+}
+.brand-ids-old{
+  font-family:'Josefin Sans',var(--sans);font-size:.56rem;font-weight:300;
+  letter-spacing:.24em;text-transform:uppercase;
+  color:var(--white);line-height:1.9;
+}
+
+/* Small version for nav */
+.brand-sm .brand-deco{font-size:2.2rem;font-weight:900}
+.brand-sm .brand-rooms{font-size:2.2rem;font-weight:900}
+.brand-sm .oo{height:1.64em}
+.brand-sm .brand-bar{height:3.7rem}
+.brand-sm .brand-ids{font-size:.84rem;letter-spacing:.2em}
+.brand-sm{gap:20px}
+
+/* ─────────────────────────── LOADER ─────────────────────────── */
+#loader{
+  position:fixed;inset:0;z-index:9999;
+  background:var(--dark);
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:36px;
+  transition:opacity 1s var(--ease);
+}
+#loader.out{opacity:0;pointer-events:none}
+
+/* ─────────────────────────── NAV ─────────────────────────── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:20px 52px;
+  transition:background .5s var(--ease),padding .5s var(--ease);
+}
+nav.scrolled{
+  background:rgba(26,5,8,.96);
+  backdrop-filter:blur(12px);
+  padding:14px 52px;
+  border-bottom:1px solid var(--w12);
+}
+.nav-right{display:flex;align-items:center;gap:30px}
+.lang-sw{display:flex;align-items:center;gap:2px}
+.lang-btn{
+  background:none;border:none;cursor:pointer;
+  font-family:var(--sans);font-size:.68rem;letter-spacing:.12em;
+  color:var(--w30);padding:4px 5px;transition:color .3s;
+}
+.lang-btn.active,.lang-btn:hover{color:var(--white)}
+.lang-sep{color:var(--w12);font-size:.6rem}
+.nav-cta{
+  font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--white);border:1px solid var(--white);padding:8px 20px;
+  transition:background .3s;
+}
+.nav-cta:hover{background:rgba(255,255,255,.1)}
+
+/* ─────────────────────────── HERO ─────────────────────────── */
+.hero{position:relative;height:100vh;overflow:hidden}
+.slides{position:absolute;inset:0}
+.slide{position:absolute;inset:0;opacity:0;transition:opacity 1.8s var(--ease)}
+.slide.active{opacity:1}
+.slide img{width:100%;height:100%;object-fit:cover}
+.hero-ov{
+  position:absolute;inset:0;
+  background:linear-gradient(160deg,rgba(26,5,8,.58) 0%,rgba(26,5,8,.12) 42%,rgba(26,5,8,.72) 100%);
+}
+.hero-c{position:absolute;bottom:86px;left:52px;right:52px;color:var(--white)}
+.eyebrow{
+  font-family:var(--sans);font-size:.67rem;letter-spacing:.28em;
+  text-transform:uppercase;color:var(--w60);margin-bottom:18px;
+}
+.hero-h{
+  font-family:var(--serif);font-size:clamp(3rem,8vw,7rem);
+  font-weight:300;line-height:1.04;letter-spacing:-.01em;margin-bottom:24px;
+}
+.hero-h em{font-style:italic;color:var(--w60)}
+.hero-sub{
+  font-size:.88rem;font-weight:300;letter-spacing:.04em;
+  color:var(--w60);max-width:360px;line-height:1.65;
+}
+.scroll-cue{
+  position:absolute;bottom:34px;right:52px;
+  display:flex;flex-direction:column;align-items:center;gap:10px;
+  color:var(--w30);font-size:.63rem;letter-spacing:.18em;text-transform:uppercase;
+}
+.s-line{width:1px;height:50px;background:var(--w12);overflow:hidden;position:relative}
+.s-line::after{content:'';position:absolute;top:-100%;width:100%;height:100%;background:var(--white);animation:sa 2.2s 1s infinite}
+@keyframes sa{to{top:100%}}
+
+
+.card-link{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;justify-content:flex-end;padding:26px;
+  background:linear-gradient(to top,rgba(26,5,8,.85) 0%,rgba(26,5,8,.2) 50%,transparent 100%);
+  opacity:0;transition:opacity .4s;text-decoration:none;}
+.card:hover .card-link{opacity:1}
+.card-link .cn{font-family:'Cormorant Garamond',Georgia,serif;font-size:1.4rem;font-weight:400;color:#fff;margin-bottom:4px}
+.card-link .ct{font-size:.67rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:16px}
+.view-btn{display:inline-flex;align-items:center;gap:8px;
+  background:#fff;color:#440D15;font-size:.68rem;font-weight:500;
+  letter-spacing:.15em;text-transform:uppercase;padding:9px 18px;
+  width:fit-content;transition:background .3s}
+.view-btn:hover{background:rgba(255,255,255,.88)}
+.view-btn svg{width:14px;height:14px}
+.no-link .card-link{cursor:default}
+
+
+
+/* ── PRICING ── */
+.pricing{padding:100px 52px;background:var(--dark)}
+.pricing .sl-w{color:var(--w60)}
+.pricing .st-w{color:var(--white)}
+.pr-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:2px;margin-top:56px;align-items:stretch;
+}
+.pr-card{
+  padding:48px 36px;
+  background:rgba(255,255,255,.04);
+  border:1px solid var(--w12);
+  display:flex;flex-direction:column;
+  transition:background .4s;
+  position:relative;
+}
+.pr-card:hover{background:rgba(255,255,255,.07)}
+.pr-card.popular{
+  background:var(--white);
+  border-color:var(--white);
+  transform:translateY(-8px);
+  box-shadow:0 24px 60px rgba(0,0,0,.35);
+  z-index:2;
+}
+.pr-card.popular:hover{background:var(--white)}
+.pr-badge{
+  position:absolute;top:-14px;left:50%;transform:translateX(-50%);
+  background:var(--dark);color:var(--white);
+  font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;
+  padding:5px 16px;white-space:nowrap;
+  border:1px solid var(--w30);
+}
+.pr-name{
+  font-family:'Cormorant Garamond',Georgia,serif;
+  font-size:1.6rem;font-weight:300;
+  margin-bottom:6px;
+}
+.pr-card:not(.popular) .pr-name{color:var(--white)}
+.pr-card.popular .pr-name{color:var(--dark)}
+.pr-area{
+  font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;
+  margin-bottom:28px;padding-bottom:28px;
+  border-bottom:1px solid;
+}
+.pr-card:not(.popular) .pr-area{color:var(--w30);border-color:var(--w12)}
+.pr-card.popular .pr-area{color:var(--d60);border-color:var(--d15)}
+.pr-price{
+  font-family:'Cormorant Garamond',Georgia,serif;
+  font-size:3rem;font-weight:300;line-height:1;
+  margin-bottom:4px;
+}
+.pr-card:not(.popular) .pr-price{color:var(--white)}
+.pr-card.popular .pr-price{color:var(--dark)}
+.pr-price span{font-size:1rem;font-weight:300;opacity:.6}
+.pr-note{font-size:.72rem;margin-bottom:32px}
+.pr-card:not(.popular) .pr-note{color:var(--w30)}
+.pr-card.popular .pr-note{color:var(--d60)}
+.pr-features{
+  list-style:none;flex:1;
+  display:flex;flex-direction:column;gap:12px;
+  margin-bottom:36px;
+}
+.pr-features li{
+  display:flex;align-items:flex-start;gap:10px;
+  font-size:.88rem;line-height:1.4;
+}
+.pr-card:not(.popular) .pr-features li{color:rgba(255,255,255,.65)}
+.pr-card.popular .pr-features li{color:rgba(26,5,8,.7)}
+.pr-features li::before{
+  content:'✓';
+  font-size:.8rem;flex-shrink:0;margin-top:1px;
+}
+.pr-card:not(.popular) .pr-features li::before{color:var(--w60)}
+.pr-card.popular .pr-features li::before{color:var(--dark)}
+.pr-card .pr-features li.no{opacity:.35}
+.pr-card .pr-features li.no::before{content:'—'}
+.pr-btn-w{
+  display:block;text-align:center;
+  font-size:.75rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;
+  background:var(--white);color:var(--dark);
+  padding:14px;text-decoration:none;
+  transition:opacity .3s;
+}
+.pr-btn-w:hover{opacity:.88}
+.pr-btn-o{
+  display:block;text-align:center;
+  font-size:.75rem;letter-spacing:.18em;text-transform:uppercase;
+  border:1px solid var(--w30);color:var(--white);
+  padding:14px;text-decoration:none;
+  transition:border-color .3s,background .3s;
+}
+.pr-btn-o:hover{border-color:var(--white);background:rgba(255,255,255,.07)}
+.pr-footer{
+  text-align:center;margin-top:40px;
+  font-size:.83rem;color:var(--w30);
+}
+@media(max-width:900px){
+  .pricing{padding:72px 20px}
+  .pr-grid{grid-template-columns:1fr;gap:12px}
+  .pr-card.popular{transform:none;box-shadow:none}
+}
+
+/* ── PORTFOLIO REDESIGN ── */
+.proj-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.proj-card{
+  position:relative;overflow:hidden;cursor:pointer;
+  height:480px;text-decoration:none;display:block;
+}
+.proj-card:nth-child(1),.proj-card:nth-child(4){height:520px}
+.proj-card img{
+  width:100%;height:100%;object-fit:cover;
+  transition:transform 1s cubic-bezier(.25,.1,.25,1);
+}
+.proj-card:hover img{transform:scale(1.06)}
+.proj-ov{
+  position:absolute;inset:0;
+  background:linear-gradient(to top,
+    rgba(26,5,8,.88) 0%,
+    rgba(26,5,8,.45) 45%,
+    rgba(26,5,8,.18) 100%);
+  display:flex;flex-direction:column;justify-content:flex-end;
+  padding:36px 32px;
+  transition:background .4s;
+}
+.proj-card:hover .proj-ov{
+  background:linear-gradient(to top,
+    rgba(26,5,8,.92) 0%,
+    rgba(26,5,8,.55) 50%,
+    rgba(26,5,8,.25) 100%);
+}
+.proj-num{
+  font-size:.65rem;letter-spacing:.22em;text-transform:uppercase;
+  color:rgba(255,255,255,.4);margin-bottom:10px;
+}
+.proj-name{
+  font-family:'Cormorant Garamond',Georgia,serif;
+  font-size:2rem;font-weight:300;font-style:italic;
+  color:#fff;line-height:1.1;margin-bottom:8px;
+}
+.proj-sub{
+  font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;
+  color:rgba(255,255,255,.5);margin-bottom:20px;
+}
+.proj-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:.7rem;font-weight:400;letter-spacing:.16em;
+  text-transform:uppercase;color:#fff;
+  border:1px solid rgba(255,255,255,.35);
+  padding:9px 20px;width:fit-content;
+  transition:background .3s,border-color .3s;
+  opacity:0;transform:translateY(8px);
+  transition:all .35s;
+}
+.proj-card:hover .proj-btn{
+  opacity:1;transform:translateY(0);
+  border-color:rgba(255,255,255,.7);
+}
+@media(max-width:900px){
+  .proj-grid{grid-template-columns:1fr}
+  .proj-card,.proj-card:nth-child(1),.proj-card:nth-child(4){height:66vw;max-height:420px}
+  .proj-btn{opacity:1;transform:none}
+}
+
+/* ─────────────────────────── PORTFOLIO ─────────────────────────── */
+.portfolio{background:var(--offwh);padding:96px 52px}
+.sh{display:flex;align-items:baseline;gap:18px;margin-bottom:52px}
+.sl{font-size:.67rem;letter-spacing:.22em;text-transform:uppercase}
+.sl-d{color:var(--d60)}   /* dark bg section labels */
+.sl-w{color:var(--w60)}   /* light bg section labels */
+.st{font-family:var(--serif);font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:300}
+.st-d{color:var(--dark)}
+.st-w{color:var(--white)}
+.pgrid{display:grid;grid-template-columns:repeat(12,1fr);gap:10px}
+.card{position:relative;overflow:hidden;cursor:pointer}
+.card:nth-child(1){grid-column:span 7;height:375px}
+.card:nth-child(2){grid-column:span 5;height:375px}
+.card:nth-child(3){grid-column:span 4;height:335px}
+.card:nth-child(4){grid-column:span 8;height:335px}
+.card img{width:100%;height:100%;object-fit:cover;transition:transform .9s var(--ease)}
+.card:hover img{transform:scale(1.05)}
+.ci{
+  position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(26,5,8,.82) 0%,transparent 55%);
+  opacity:0;transition:opacity .4s;
+  display:flex;flex-direction:column;justify-content:flex-end;padding:26px;
+}
+.card:hover .ci{opacity:1}
+.cn{font-family:var(--serif);font-size:1.4rem;font-weight:400;color:var(--white);margin-bottom:4px}
+.ct{font-size:.67rem;letter-spacing:.16em;text-transform:uppercase;color:var(--w60)}
+
+/* ─────────────────────────── ABOUT ─────────────────────────── */
+.about{
+  display:grid;grid-template-columns:1fr 1fr;gap:80px;
+  align-items:center;padding:116px 52px;background:var(--cream);
+}
+.ab-body{
+  font-family:var(--serif);font-size:1.18rem;font-weight:300;
+  line-height:1.75;color:var(--dark);margin-bottom:20px;
+}
+.ab-detail{font-size:.88rem;line-height:1.75;color:var(--d60);margin-bottom:44px}
+.stats{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:14px;
+  padding-top:36px;border-top:1px solid var(--d15);
+}
+.sn{font-family:var(--serif);font-size:2.5rem;font-weight:300;color:var(--dark);line-height:1}
+.sl3{font-size:.67rem;letter-spacing:.12em;text-transform:uppercase;color:var(--d60);margin-top:5px}
+.ab-why{list-style:none;margin:38px 0 0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:13px 28px}
+.ab-why li{font-size:.84rem;line-height:1.5;color:var(--dark);display:flex;align-items:flex-start;gap:10px}
+.ab-why li::before{content:'✓';color:var(--dark);font-size:.9rem;flex-shrink:0;line-height:1.4}
+.aimg{position:relative}
+.aimg img{width:100%;height:565px;object-fit:cover}
+.aimg::before{
+  content:'';position:absolute;top:-13px;left:-13px;right:13px;bottom:13px;
+  border:1px solid rgba(26,5,8,.25);z-index:-1;
+}
+
+/* ─────────────────────────── SERVICES ─────────────────────────── */
+.services{background:var(--dark2);padding:96px 52px}
+.sg{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:52px}
+.svc{padding:44px 32px;border:1px solid var(--w12);transition:background .4s}
+.svc:hover{background:rgba(255,255,255,.04)}
+.sv-n{font-family:var(--serif);font-size:.8rem;color:var(--w60);margin-bottom:18px;letter-spacing:.12em}
+.sv-t{font-family:var(--serif);font-size:1.5rem;font-weight:300;color:var(--white);margin-bottom:13px;line-height:1.3}
+.sv-d{font-size:.85rem;line-height:1.72;color:var(--w30)}
+.sv-p{margin-top:26px;font-family:var(--serif);font-size:.95rem;color:var(--w60);letter-spacing:.05em}
+
+/* ─────────────────────────── PROCESS ─────────────────────────── */
+.process{padding:96px 52px;background:var(--offwh)}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:38px;margin-top:52px}
+.step{border-top:2px solid rgba(26,5,8,.2);padding-top:22px}
+.step-l{font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--d60);margin-bottom:11px}
+.step-t{font-family:var(--serif);font-size:1.2rem;color:var(--dark);margin-bottom:9px}
+.step-d{font-size:.83rem;line-height:1.65;color:var(--d60)}
+
+/* ─────────────────────────── CTA ─────────────────────────── */
+.cta{
+  position:relative;height:56vh;
+  display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden;
+}
+.cta img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.cta-ov{position:absolute;inset:0;background:rgba(26,5,8,.76)}
+.cta-c{position:relative;z-index:1;color:var(--white);padding:0 22px}
+.cta-t{font-family:var(--serif);font-size:clamp(2rem,5vw,3.6rem);font-weight:300;margin-bottom:14px}
+.cta-s{font-size:.86rem;color:var(--w60);margin-bottom:36px;letter-spacing:.05em}
+.btns{display:flex;gap:13px;justify-content:center;flex-wrap:wrap}
+.btn-w{
+  display:inline-flex;align-items:center;gap:9px;
+  background:var(--white);color:var(--dark);
+  font-size:.74rem;font-weight:500;letter-spacing:.18em;
+  text-transform:uppercase;padding:14px 32px;transition:background .3s;
+}
+.btn-w:hover{background:var(--cream)}
+.btn-o{
+  display:inline-flex;align-items:center;gap:9px;
+  border:1px solid var(--w30);color:var(--white);
+  font-size:.74rem;letter-spacing:.18em;
+  text-transform:uppercase;padding:14px 32px;transition:border-color .3s,background .3s;
+}
+.btn-o:hover{border-color:var(--white);background:rgba(255,255,255,.07)}
+
+/* ─────────────────────────── FOOTER ─────────────────────────── */
+footer{background:var(--dark3);color:var(--w60);padding:58px 52px 32px}
+.ft{display:grid;grid-template-columns:2fr 1fr 1fr;gap:58px;padding-bottom:42px;border-bottom:1px solid var(--w12)}
+.ft-tag{font-size:.83rem;line-height:1.65;color:var(--w30);margin-top:14px}
+.ft-col h4{font-size:.65rem;letter-spacing:.22em;text-transform:uppercase;color:var(--w60);margin-bottom:15px}
+.ft-col a,.ft-col p{font-size:.84rem;line-height:2.1;display:block;color:var(--w30)}
+.ft-col a:hover{color:var(--white)}
+.ft-bot{display:flex;justify-content:space-between;align-items:center;padding-top:24px;font-size:.7rem;color:var(--w30)}
+
+/* ─────────────────────────── TG FLOAT ─────────────────────────── */
+.tg-float{
+  position:fixed;bottom:24px;right:24px;z-index:300;
+  background:var(--white);color:var(--dark);
+  width:50px;height:50px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 24px rgba(0,0,0,.35);transition:transform .3s,background .3s;
+}
+.tg-float:hover{transform:scale(1.1);background:var(--cream)}
+
+/* ─────────────────────────── REVEAL ─────────────────────────── */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .85s var(--ease),transform .85s var(--ease)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* ─────────────────────────── RESPONSIVE ─────────────────────────── */
+@media(max-width:960px){
+  nav,nav.scrolled{padding:14px 20px}
+  .hero-c{left:20px;right:20px;bottom:60px}
+  .scroll-cue{right:20px}
+  .portfolio,.services,.process{padding:68px 20px}
+  .about{padding:68px 20px}
+  .pgrid{grid-template-columns:1fr 1fr}
+  .card:nth-child(n){grid-column:span 1;height:250px}
+  .ci{opacity:1}
+  .about{grid-template-columns:1fr;gap:40px}
+  .ab-why{grid-template-columns:1fr;gap:11px}
+  .aimg::before{display:none}
+  .aimg img{height:290px}
+  .sg,.steps{grid-template-columns:1fr}
+  .ft{grid-template-columns:1fr;gap:32px}
+  footer{padding:42px 20px 24px}
+  .brand-sm .brand-deco,.brand-sm .brand-rooms{font-size:.95rem}
+  .brand-sm .brand-bar{height:1.6rem}
+}
+@media(max-width:560px){
+  .pgrid{grid-template-columns:1fr}
+  .card:nth-child(n){height:220px}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════ OO SVG DEFINITION (reused via symbols) ═══════════════════ -->
+<svg style="display:none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Large OO for loader -->
+    <symbol id="oo-lg" viewBox="0 0 104 68">
+      <defs>
+        <clipPath id="lg-t"><rect x="0" y="0" width="104" height="34"/></clipPath>
+        <clipPath id="lg-b"><rect x="0" y="34" width="104" height="34"/></clipPath>
+      </defs>
+      <!-- Right ring — bottom half (behind left) -->
+      <g clip-path="url(#lg-b)" fill="none" stroke="white" stroke-width="2.2">
+        <circle cx="72" cy="34" r="12"/><circle cx="72" cy="34" r="18"/>
+        <circle cx="72" cy="34" r="24"/><circle cx="72" cy="34" r="30"/>
+      </g>
+      <!-- Left ring — full -->
+      <g fill="none" stroke="white" stroke-width="2.2">
+        <circle cx="32" cy="34" r="12"/><circle cx="32" cy="34" r="18"/>
+        <circle cx="32" cy="34" r="24"/><circle cx="32" cy="34" r="30"/>
+      </g>
+      <!-- Right ring — top half (in front of left) -->
+      <g clip-path="url(#lg-t)" fill="none" stroke="white" stroke-width="2.2">
+        <circle cx="72" cy="34" r="12"/><circle cx="72" cy="34" r="18"/>
+        <circle cx="72" cy="34" r="24"/><circle cx="72" cy="34" r="30"/>
+      </g>
+    </symbol>
+    <!-- Small OO for nav/footer -->
+    <symbol id="oo-sm" viewBox="0 0 104 68">
+      <defs>
+        <clipPath id="sm-t"><rect x="0" y="0" width="104" height="34"/></clipPath>
+        <clipPath id="sm-b"><rect x="0" y="34" width="104" height="34"/></clipPath>
+      </defs>
+      <g clip-path="url(#sm-b)" fill="none" stroke="white" stroke-width="3">
+        <circle cx="72" cy="34" r="12"/><circle cx="72" cy="34" r="20"/><circle cx="72" cy="34" r="28"/>
+      </g>
+      <g fill="none" stroke="white" stroke-width="3">
+        <circle cx="32" cy="34" r="12"/><circle cx="32" cy="34" r="20"/><circle cx="32" cy="34" r="28"/>
+      </g>
+      <g clip-path="url(#sm-t)" fill="none" stroke="white" stroke-width="3">
+        <circle cx="72" cy="34" r="12"/><circle cx="72" cy="34" r="20"/><circle cx="72" cy="34" r="28"/>
+      </g>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- ═══════════════════ LOADER ═══════════════════ -->
+<div id="loader">
+  <img src="images/brand/logo-large.png" alt="DECOROOMS" style="height:200px;width:auto;">
+</div>
+
+<!-- ═══════════════════ NAV ═══════════════════ -->
+<nav id="nav">
+  <a href="#"><img src="images/brand/logo-nav.png" alt="DECOROOMS" style="height:108px;width:auto;"></a>
+  <div class="nav-right">
+    <a href="#pricing" style="font-size:.75rem;font-weight:400;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.7);text-decoration:none;transition:color .3s" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,.7)'" data-ru="Услуги" data-uz="Xizmatlar" data-en="Services">ЦЕНЫ</a>
+    <a href="#portfolio" style="font-size:.75rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:#fff;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.3);padding:9px 22px;transition:background .3s;text-decoration:none" onmouseover="this.style.background='rgba(255,255,255,.22)'" onmouseout="this.style.background='rgba(255,255,255,.12)'">ПОРТФОЛИО</a>
+    <div class="lang-sw">
+      <button class="lang-btn active" onclick="setLang('ru')">RU</button>
+      <span class="lang-sep">/</span>
+      <button class="lang-btn" onclick="setLang('uz')">UZ</button>
+      <span class="lang-sep">/</span>
+      <button class="lang-btn" onclick="setLang('en')">EN</button>
+    </div>
+    <a href="#contact" class="nav-cta" data-ru="Связаться" data-uz="Bog'lanish" data-en="Enquire">Связаться</a>
+  </div>
+</nav>
+
+<!-- ═══════════════════ HERO ═══════════════════ -->
+<section class="hero">
+  <div class="slides" id="slides">
+    <div class="slide active"><img src="images/slider/01-black-red.jpg" alt="Black & Red Interior"></div>
+    <div class="slide"><img src="images/slider/02-geofizika-1.png" alt="Geofizika Bedroom"></div>
+    <div class="slide"><img src="images/slider/03-geofizika-2.png" alt="Geofizika Living Room"></div>
+    <div class="slide"><img src="images/slider/04-klassika-1.png" alt="Klassika Dining"></div>
+    <div class="slide"><img src="images/slider/05-klassika-2.png" alt="Klassika Bedroom"></div>
+    <div class="slide"><img src="images/slider/06-klassika-3.png" alt="Klassika Master Bedroom"></div>
+    <div class="slide"><img src="images/slider/07-parkentskiy.png" alt="Parkentskiy Living Room"></div>
+    <div class="slide"><img src="images/slider/08-parkwood.png" alt="Parkwood Interior"></div>
+  </div>
+  <div class="hero-ov"></div>
+  <div class="hero-c">
+    <div class="eyebrow" data-ru="Дизайн интерьера и экстерьера · Ташкент" data-uz="Interer va eksterer dizayni · Toshkent" data-en="Interior &amp; Exterior Design · Tashkent">Дизайн интерьера и экстерьера · Ташкент</div>
+    <h1 class="hero-h" data-ru="Пространства,<br>которые <em>чувствуют</em>" data-uz="Siz his<br>qiladigan <em>muhit</em>" data-en="Spaces that<br>you <em>feel</em>">Пространства,<br>которые <em>чувствуют</em></h1>
+    <p class="hero-sub" data-ru="Создаём уникальные интерьеры, отражающие вашу личность и образ жизни" data-uz="Sizning shaxsiyatingiz va turmush tarzingizni aks ettiruvchi noyob interierlar yaratamiz" data-en="We create unique spaces that reflect your personality and way of living">Создаём уникальные интерьеры, отражающие вашу личность и образ жизни</p>
+  </div>
+  <div class="scroll-cue">
+    <div class="s-line"></div>
+    <span data-ru="далее" data-uz="keyingi" data-en="scroll">далее</span>
+  </div>
+</section>
+
+
+<!-- ═══════════════════ PRICING ═══════════════════ -->
+<section class="pricing" id="pricing">
+  <div class="sh reveal" style="margin-bottom:0">
+    <span class="sl sl-w" data-ru="Стоимость" data-uz="Narxlar" data-en="Pricing">Стоимость</span>
+    <h2 class="st st-w" data-ru="Наши тарифы" data-uz="Bizning tariflar" data-en="Our Packages">Наши тарифы</h2>
+  </div>
+
+  <div class="pr-grid">
+
+    <!-- БАЗОВЫЙ -->
+    <div class="pr-card reveal">
+      <div class="pr-name" data-ru="Базовый" data-uz="Bazaviy" data-en="Basic">Базовый</div>
+      <div class="pr-area" data-ru="Квартира · до 80 м²" data-uz="Kvartira · 80 m²gacha" data-en="Apartment · up to 80 m²">Квартира · до 80 м²</div>
+      <div class="pr-price">$8<span>/м²</span></div>
+      <div class="pr-note" data-ru="минимальный заказ $800" data-uz="minimal buyurtma $800" data-en="minimum order $800">минимальный заказ $800</div>
+      <ul class="pr-features">
+        <li data-ru="Обмерный план" data-uz="O'lchov rejasi" data-en="Floor measurement plan">Обмерный план</li>
+        <li data-ru="Планировочное решение" data-uz="Rejalash yechimi" data-en="Planning solution">Планировочное решение</li>
+        <li data-ru="Дизайн-концепция" data-uz="Dizayn kontseptsiyasi" data-en="Design concept">Дизайн-концепция</li>
+        <li data-ru="Цветовая палитра" data-uz="Rang palitrasи" data-en="Colour palette">Цветовая палитра</li>
+        <li data-ru="3D визуализация (до 3 комнат)" data-uz="3D vizualizatsiya (3 xonagacha)" data-en="3D visualisation (up to 3 rooms)">3D визуализация (до 3 комнат)</li>
+        <li data-ru="Список материалов и мебели" data-uz="Materiallar va mebel ro'yxati" data-en="Materials & furniture list">Список материалов и мебели</li>
+        <li class="no" data-ru="Рабочие чертежи" data-uz="Ish chizmalari" data-en="Working drawings">Рабочие чертежи</li>
+        <li class="no" data-ru="Авторский надзор" data-uz="Muallif nazorati" data-en="Author supervision">Авторский надзор</li>
+        <li class="no" data-ru="Подбор подрядчиков" data-uz="Pudratchilar tanlash" data-en="Contractor selection">Подбор подрядчиков</li>
+      </ul>
+      <a href="https://t.me/+998903533933" class="pr-btn-o"
+         data-ru="Обсудить проект" data-uz="Loyihani muhokama qilish" data-en="Discuss project">
+        Обсудить проект
+      </a>
+    </div>
+
+    <!-- СТАНДАРТ (popular) -->
+    <div class="pr-card popular reveal">
+      <div class="pr-badge" data-ru="Популярный выбор" data-uz="Mashhur tanlov" data-en="Most Popular">Популярный выбор</div>
+      <div class="pr-name" data-ru="Стандарт" data-uz="Standart" data-en="Standard">Стандарт</div>
+      <div class="pr-area" data-ru="Квартира · 80–200 м²" data-uz="Kvartira · 80–200 m²" data-en="Apartment · 80–200 m²">Квартира · 80–200 м²</div>
+      <div class="pr-price">$12<span>/м²</span></div>
+      <div class="pr-note" data-ru="полный дизайн-проект" data-uz="to'liq dizayn loyihasi" data-en="full design project">полный дизайн-проект</div>
+      <ul class="pr-features">
+        <li data-ru="Обмерный план" data-uz="O'lchov rejasi" data-en="Floor measurement plan">Обмерный план</li>
+        <li data-ru="Планировочное решение" data-uz="Rejalash yechimi" data-en="Planning solution">Планировочное решение</li>
+        <li data-ru="Дизайн-концепция" data-uz="Dizayn kontseptsiyasi" data-en="Design concept">Дизайн-концепция</li>
+        <li data-ru="Цветовая палитра" data-uz="Rang palitrasи" data-en="Colour palette">Цветовая палитра</li>
+        <li data-ru="3D визуализация всех помещений" data-uz="Barcha xonalar 3D vizualizatsiyasi" data-en="3D visualisation of all rooms">3D визуализация всех помещений</li>
+        <li data-ru="Полная спецификация материалов" data-uz="To'liq material spetsifikatsiyasi" data-en="Full material specification">Полная спецификация материалов</li>
+        <li data-ru="Рабочие чертежи" data-uz="Ish chizmalari" data-en="Working drawings">Рабочие чертежи</li>
+        <li data-ru="Авторский надзор — 5 выездов" data-uz="Muallif nazorati — 5 tashrif" data-en="Author supervision — 5 visits">Авторский надзор — 5 выездов</li>
+        <li data-ru="Подбор подрядчиков" data-uz="Pudratchilar tanlash" data-en="Contractor selection">Подбор подрядчиков</li>
+      </ul>
+      <a href="https://t.me/+998903533933" class="pr-btn-w"
+         data-ru="Выбрать пакет" data-uz="Paketni tanlash" data-en="Choose package">
+        Выбрать пакет
+      </a>
+    </div>
+
+    <!-- ПРЕМИУМ -->
+    <div class="pr-card reveal">
+      <div class="pr-name" data-ru="Премиум" data-uz="Premium" data-en="Premium">Премиум</div>
+      <div class="pr-area" data-ru="Дом · Вилла · от 200 м²" data-uz="Uy · Villa · 200 m²dan" data-en="House · Villa · from 200 m²">Дом · Вилла · от 200 м²</div>
+      <div class="pr-price">$22<span>/м²</span></div>
+      <div class="pr-note" data-ru="полное ведение проекта" data-uz="loyihani to'liq boshqarish" data-en="full project management">полное ведение проекта</div>
+      <ul class="pr-features">
+        <li data-ru="Обмерный план" data-uz="O'lchov rejasi" data-en="Floor measurement plan">Обмерный план</li>
+        <li data-ru="Планировочное решение" data-uz="Rejalash yechimi" data-en="Planning solution">Планировочное решение</li>
+        <li data-ru="Дизайн-концепция" data-uz="Dizayn kontseptsiyasi" data-en="Design concept">Дизайн-концепция</li>
+        <li data-ru="Цветовая палитра" data-uz="Rang palitrasи" data-en="Colour palette">Цветовая палитра</li>
+        <li data-ru="3D визуализация всех помещений" data-uz="Barcha xonalar 3D vizualizatsiyasi" data-en="3D visualisation of all rooms">3D визуализация всех помещений</li>
+        <li data-ru="Полная спецификация материалов" data-uz="To'liq material spetsifikatsiyasi" data-en="Full material specification">Полная спецификация материалов</li>
+        <li data-ru="Рабочие чертежи" data-uz="Ish chizmalari" data-en="Working drawings">Рабочие чертежи</li>
+        <li data-ru="Авторский надзор — 10 выездов" data-uz="Muallif nazorati — 10 tashrif" data-en="Author supervision — 10 visits">Авторский надзор — 10 выездов</li>
+        <li data-ru="Подбор подрядчиков и мебели" data-uz="Pudratchilar va mebel tanlash" data-en="Contractor & furniture selection">Подбор подрядчиков и мебели</li>
+      </ul>
+      <a href="https://t.me/+998903533933" class="pr-btn-o"
+         data-ru="Обсудить проект" data-uz="Loyihani muhokama qilish" data-en="Discuss project">
+        Обсудить проект
+      </a>
+    </div>
+
+  </div>
+
+  <p class="pr-footer reveal"
+     data-ru="Цены указаны за дизайн-проект. Авторский надзор и закупка мебели рассчитываются отдельно. Бесплатная консультация в Ташкенте."
+     data-uz="Narxlar dizayn loyihasi uchun ko'rsatilgan. Muallif nazorati va mebel xaridi alohida hisoblanadi."
+     data-en="Prices are for the design project. Author supervision and furniture procurement are calculated separately. Free consultation in Tashkent.">
+    Цены указаны за дизайн-проект. Авторский надзор рассчитывается отдельно. Бесплатная консультация в Ташкенте.
+  </p>
+</section>
+
+
+<!-- ═══════════════════ PORTFOLIO ═══════════════════ -->
+<section class="portfolio" id="portfolio">
+  <div class="sh reveal" style="justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px">
+    <div style="display:flex;align-items:baseline;gap:18px">
+      <span class="sl sl-d" data-ru="Портфолио" data-uz="Portfolio" data-en="Portfolio">Портфолио</span>
+      <h2 class="st st-d" data-ru="Наши проекты" data-uz="Loyihalarimiz" data-en="Our Projects">Наши проекты</h2>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <a href="residence-doree.html" style="display:inline-flex;align-items:center;gap:6px;font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(26,5,8,.5);border:1px solid rgba(26,5,8,.2);padding:6px 14px;transition:all .3s;text-decoration:none" onmouseover="this.style.color='#440D15';this.style.borderColor='#440D15'" onmouseout="this.style.color='rgba(26,5,8,.5)';this.style.borderColor='rgba(26,5,8,.2)'">
+        Résidence Dorée <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <a href="lumiere-naturelle.html" style="display:inline-flex;align-items:center;gap:6px;font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(26,5,8,.5);border:1px solid rgba(26,5,8,.2);padding:6px 14px;transition:all .3s;text-decoration:none" onmouseover="this.style.color='#440D15';this.style.borderColor='#440D15'" onmouseout="this.style.color='rgba(26,5,8,.5)';this.style.borderColor='rgba(26,5,8,.2)'">
+        Lumière Naturelle <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <a href="bois-lumiere.html" style="display:inline-flex;align-items:center;gap:6px;font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(26,5,8,.5);border:1px solid rgba(26,5,8,.2);padding:6px 14px;transition:all .3s;text-decoration:none" onmouseover="this.style.color='#440D15';this.style.borderColor='#440D15'" onmouseout="this.style.color='rgba(26,5,8,.5)';this.style.borderColor='rgba(26,5,8,.2)'">
+        Bois & Lumière <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <a href="constellation.html" style="display:inline-flex;align-items:center;gap:6px;font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(26,5,8,.5);border:1px solid rgba(26,5,8,.2);padding:6px 14px;transition:all .3s;text-decoration:none" onmouseover="this.style.color='#440D15';this.style.borderColor='#440D15'" onmouseout="this.style.color='rgba(26,5,8,.5)';this.style.borderColor='rgba(26,5,8,.2)'">
+        Constellation <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </div>
+  <div class="proj-grid" id="projGrid">
+    <!-- Карточки проектов подгружаются автоматически из projects.json -->
+  </div>
+
+</section>
+
+<!-- ═══════════════════ ABOUT ═══════════════════ -->
+<div class="about" id="about">
+  <div class="reveal">
+    <div class="sh" style="margin-bottom:28px">
+      <span class="sl sl-d" data-ru="О студии" data-uz="Studio haqida" data-en="About">О студии</span>
+      <h2 class="st st-d" data-ru="Мы создаём<br>не просто интерьеры" data-uz="Biz shunchaki<br>interer yaratmaymiz" data-en="More than<br>just interiors">Мы создаём<br>не просто интерьеры</h2>
+    </div>
+    <p class="ab-body" data-ru="Наша студия специализируется на проектировании и реализации интерьеров высокого уровня сложности. Команду составляют дипломированные специалисты с высшим образованием в сфере дизайна и архитектуры." data-uz="Studiyamiz yuqori darajadagi murakkab interyerlarni loyihalash va amalga oshirishga ixtisoslashgan. Jamoamiz dizayn va arxitektura sohasida oliy ma'lumotli diplomli mutaxassislardan iborat." data-en="Our studio specialises in designing and delivering interiors of a high level of complexity. Our team consists of certified specialists with higher education in design and architecture.">Наша студия специализируется на проектировании и реализации интерьеров высокого уровня сложности. Команду составляют дипломированные специалисты с высшим образованием в сфере дизайна и архитектуры.</p>
+    <p class="ab-detail" data-ru="Более 17 лет мы создаём пространства, сочетающие эстетику и функциональность — от жилых интерьеров до масштабных коммерческих объектов. В нашем портфолио более 100 реализованных проектов в Узбекистане и за рубежом, включая страны СНГ и дальнего зарубежья." data-uz="17 yildan ortiq vaqt davomida biz estetika va funksionallikni uyg'unlashtiruvchi makonlarni yaratamiz — turar-joy interyerlaridan yirik tijorat ob'ektlarigacha. Portfoliomizda O'zbekiston va xorijda amalga oshirilgan 100 dan ortiq loyiha mavjud." data-en="For over 17 years we have been creating spaces that combine aesthetics and functionality — from residential interiors to large-scale commercial projects. Our portfolio includes more than 100 completed projects in Uzbekistan and abroad, including CIS and international clients.">Более 17 лет мы создаём пространства, сочетающие эстетику и функциональность — от жилых интерьеров до масштабных коммерческих объектов. В нашем портфолио более 100 реализованных проектов в Узбекистане и за рубежом, включая страны СНГ и дальнего зарубежья.</p>
+    <div class="stats">
+      <div><div class="sn">100+</div><div class="sl3" data-ru="Проектов" data-uz="Loyihalar" data-en="Projects">Проектов</div></div>
+      <div><div class="sn">17</div><div class="sl3" data-ru="Лет опыта" data-uz="Yil tajriba" data-en="Years exp.">Лет опыта</div></div>
+      <div><div class="sn">100%</div><div class="sl3" data-ru="Довольных" data-uz="Mamnun" data-en="Satisfied">Довольных</div></div>
+    </div>
+    <ul class="ab-why">
+      <li data-ru="Профессиональная команда с 17-летним опытом" data-uz="17 yillik tajribaga ega professional jamoa" data-en="Professional team with 17 years of experience">Профессиональная команда с 17-летним опытом</li>
+      <li data-ru="100+ реализованных проектов в портфолио" data-uz="Portfolioda 100+ amalga oshirilgan loyiha" data-en="100+ completed projects in our portfolio">100+ реализованных проектов в портфолио</li>
+      <li data-ru="Проекты различных масштабов и стилей" data-uz="Turli ko'lam va uslubdagi loyihalar" data-en="Projects of various scales and styles">Проекты различных масштабов и стилей</li>
+      <li data-ru="Локальные и международные стандарты" data-uz="Mahalliy va xalqaro standartlar" data-en="Local and international standards">Локальные и международные стандарты</li>
+      <li data-ru="Ответственность и надёжность в сроках" data-uz="Mas'uliyat va muddatlarda ishonchlilik" data-en="Reliability and commitment to deadlines">Ответственность и надёжность в сроках</li>
+      <li data-ru="Индивидуальный подход к каждому проекту" data-uz="Har bir loyihaga individual yondashuv" data-en="An individual approach to every project">Индивидуальный подход к каждому проекту</li>
+    </ul>
+  </div>
+  <div class="aimg reveal">
+    <img src="images/about/studio.jpg" alt="DECOROOMS studio">
+  </div>
+</div>
+
+<!-- ═══════════════════ SERVICES ═══════════════════ -->
+<section class="services" id="services">
+  <div class="sh reveal">
+    <span class="sl sl-w" data-ru="Услуги" data-uz="Xizmatlar" data-en="Services">Услуги</span>
+    <h2 class="st st-w" data-ru="Что мы делаем" data-uz="Nima qilamiz" data-en="What we do">Что мы делаем</h2>
+  </div>
+  <div class="sg">
+    <div class="svc reveal">
+      <div class="sv-n">01</div>
+      <div class="sv-t" data-ru="Дизайн интерьера" data-uz="Interer dizayni" data-en="Interior Design">Дизайн интерьера</div>
+      <div class="sv-d" data-ru="Полный дизайн-проект от концепции до авторского надзора. Квартиры, дома, пентхаусы в любом стиле." data-uz="Kontseptsiyadan muallif nazoratigacha to'liq dizayn loyihasi." data-en="Full design project from concept to authorial supervision. Apartments, houses and penthouses in any style.">Полный дизайн-проект от концепции до авторского надзора. Квартиры, дома, пентхаусы в любом стиле.</div>
+      <div class="sv-p" data-ru="от $15 / м²" data-uz="$15 / m²dan" data-en="from $15 / m²">от $15 / м²</div>
+    </div>
+    <div class="svc reveal">
+      <div class="sv-n">02</div>
+      <div class="sv-t" data-ru="Дизайн экстерьера" data-uz="Eksterer dizayni" data-en="Exterior Design">Дизайн экстерьера</div>
+      <div class="sv-d" data-ru="Фасады, ландшафтный дизайн, входные группы. Создаём образ вашего дома снаружи." data-uz="Fasadlar, landshaft dizayni, kirish guruhlari. Uyingizning tashqi qiyofasini yaratamiz." data-en="Facades, landscaping, entrance groups. We shape the exterior image of your home.">Фасады, ландшафтный дизайн, входные группы. Создаём образ вашего дома снаружи.</div>
+      <div class="sv-p" data-ru="от $10 / м²" data-uz="$10 / m²dan" data-en="from $10 / m²">от $10 / м²</div>
+    </div>
+    <div class="svc reveal">
+      <div class="sv-n">03</div>
+      <div class="sv-t" data-ru="Авторский надзор" data-uz="Muallif nazorati" data-en="Supervision">Авторский надзор</div>
+      <div class="sv-d" data-ru="Контроль реализации: выезды на объект, согласование материалов, работа с подрядчиками до финала." data-uz="Amalga oshirishni nazorat qilish: ob'ektga tashrif, materiallarni muvofiqlashtirish, pudratchilar bilan ishlash." data-en="Implementation oversight: site visits, material approvals and contractor management to final result.">Контроль реализации: выезды на объект, согласование материалов, работа с подрядчиками до финала.</div>
+      <div class="sv-p" data-ru="по запросу" data-uz="so'rov bo'yicha" data-en="on request">по запросу</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ PROCESS ═══════════════════ -->
+<section class="process" id="process">
+  <div class="sh reveal">
+    <span class="sl sl-d" data-ru="Как мы работаем" data-uz="Qanday ishlaymiz" data-en="Process">Как мы работаем</span>
+    <h2 class="st st-d" data-ru="Наш процесс" data-uz="Bizning jarayon" data-en="Our Process">Наш процесс</h2>
+  </div>
+  <div class="steps">
+    <div class="step reveal">
+      <div class="step-l" data-ru="Шаг 01" data-uz="Qadam 01" data-en="Step 01">Шаг 01</div>
+      <div class="step-t" data-ru="Консультация" data-uz="Konsultatsiya" data-en="Consultation">Консультация</div>
+      <div class="step-d" data-ru="Встречаемся, изучаем объект, обсуждаем пожелания, стиль и бюджет. Бесплатно в Ташкенте." data-uz="Uchrashamiz, ob'ektni o'rganamiz, istaklaringiz, uslub va byudjetni muhokama qilamiz." data-en="We meet, study the space, discuss wishes, style and budget. Free in Tashkent.">Встречаемся, изучаем объект, обсуждаем пожелания, стиль и бюджет. Бесплатно в Ташкенте.</div>
+    </div>
+    <div class="step reveal">
+      <div class="step-l" data-ru="Шаг 02" data-uz="Qadam 02" data-en="Step 02">Шаг 02</div>
+      <div class="step-t" data-ru="Концепция" data-uz="Kontseptsiya" data-en="Concept">Концепция</div>
+      <div class="step-d" data-ru="Разрабатываем планировку, подбираем референсы, формируем палитру и общую идею." data-uz="Rejalashtirishni ishlab chiqamiz, referenslar tanlaymiz, rang palitrasini va umumiy g'oyani shakllantiramiz." data-en="We develop the layout, select references and form the colour palette and overall concept.">Разрабатываем планировку, подбираем референсы, формируем палитру и общую идею.</div>
+    </div>
+    <div class="step reveal">
+      <div class="step-l" data-ru="Шаг 03" data-uz="Qadam 03" data-en="Step 03">Шаг 03</div>
+      <div class="step-t" data-ru="Визуализация" data-uz="Vizualizatsiya" data-en="Visualisation">Визуализация</div>
+      <div class="step-d" data-ru="3D-рендеры каждого помещения. Вы видите результат до начала ремонта." data-uz="Har bir xona uchun 3D renderlar. Siz ta'mirlash boshlanishidan oldin natijani ko'rasiz." data-en="3D renders of every room. You see the result before renovation begins.">3D-рендеры каждого помещения. Вы видите результат до начала ремонта.</div>
+    </div>
+    <div class="step reveal">
+      <div class="step-l" data-ru="Шаг 04" data-uz="Qadam 04" data-en="Step 04">Шаг 04</div>
+      <div class="step-t" data-ru="Реализация" data-uz="Amalga oshirish" data-en="Realisation">Реализация</div>
+      <div class="step-d" data-ru="Авторский надзор на всех этапах — от черновых работ до финальной расстановки." data-uz="Barcha bosqichlarda muallif nazorati — qoralama ishlardan yakuniy joylashtirishgacha." data-en="Authorial supervision at every stage — from rough works to the final placement.">Авторский надзор на всех этапах — от черновых работ до финальной расстановки.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ CTA ═══════════════════ -->
+<div class="cta" id="contact">
+  <img src="images/cta/contact-bg.jpg" alt="Contact DECOROOMS">
+  <div class="cta-ov"></div>
+  <div class="cta-c">
+    <h2 class="cta-t" data-ru="Начнём ваш проект?" data-uz="Loyihangizni boshlaymizmi?" data-en="Ready to begin?">Начнём ваш проект?</h2>
+    <p class="cta-s" data-ru="Бесплатная консультация · Ташкент · Ответим в течение 2 часов" data-uz="Bepul konsultatsiya · Toshkent · 2 soat ichida javob beramiz" data-en="Free consultation · Tashkent · We reply within 2 hours">Бесплатная консультация · Ташкент · Ответим в течение 2 часов</p>
+    <div class="btns">
+      <a href="https://t.me/+998903533933" class="btn-w">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12L8.32 14.617l-2.96-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.496.969z"/></svg>
+        <span data-ru="Написать в Telegram" data-uz="Telegramda yozing" data-en="Message on Telegram">Написать в Telegram</span>
+      </a>
+      <a href="tel:+998903533933" class="btn-o">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+        <span data-ru="Позвонить" data-uz="Qo'ng'iroq qiling" data-en="Call us">Позвонить</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ FOOTER ═══════════════════ -->
+<footer>
+  <div class="ft">
+    <div>
+      <img src="images/brand/logo-footer.png" alt="DECOROOMS" style="height:70px;width:auto;margin-bottom:12px;">
+      <p class="ft-tag" data-ru="Дизайн интерьера и экстерьера в Ташкенте." data-uz="Toshkentda interer va eksterer dizayni." data-en="Interior &amp; Exterior Design Studio · Tashkent.">Дизайн интерьера и экстерьера в Ташкенте.</p>
+    </div>
+    <div class="ft-col">
+      <h4 data-ru="Контакты" data-uz="Aloqa" data-en="Contact">Контакты</h4>
+      <a href="tel:+998903533933">+998 90 353 39 33</a>
+      <a href="mailto:ibragimovbekzod1688@gmail.com">ibragimovbekzod1688@gmail.com</a>
+      <p data-ru="Ташкент, Узбекистан" data-uz="Toshkent, O'zbekiston" data-en="Tashkent, Uzbekistan">Ташкент, Узбекистан</p>
+    </div>
+    <div class="ft-col">
+      <h4 data-ru="Услуги" data-uz="Xizmatlar" data-en="Services">Услуги</h4>
+      <a href="#services" data-ru="Дизайн интерьера" data-uz="Interer dizayni" data-en="Interior Design">Дизайн интерьера</a>
+      <a href="#services" data-ru="Дизайн экстерьера" data-uz="Eksterer dizayni" data-en="Exterior Design">Дизайн экстерьера</a>
+      <a href="#services" data-ru="Авторский надзор" data-uz="Muallif nazorati" data-en="Supervision">Авторский надзор</a>
+    </div>
+  </div>
+  <div class="ft-bot">
+    <span data-ru="© 2026 DECOROOMS. Все права защищены." data-uz="© 2026 DECOROOMS. Barcha huquqlar himoyalangan." data-en="© 2026 DECOROOMS. All rights reserved.">© 2026 DECOROOMS. Все права защищены.</span>
+    <span>Tashkent, Uzbekistan</span>
+  </div>
+</footer>
+
+<!-- TG FLOAT -->
+<a href="https://t.me/+998903533933" class="tg-float">
+  <svg width="21" height="21" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12L8.32 14.617l-2.96-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.496.969z"/></svg>
+</a>
+
+<script>
+// Loader
+window.addEventListener('load',()=>{
+  setTimeout(()=>document.getElementById('loader').classList.add('out'),1900);
+  setTimeout(()=>{const l=document.getElementById('loader');if(l)l.remove()},2900);
+});
+
+// Nav scroll
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>50));
+
+// Slideshow
+const slides=document.querySelectorAll('.slide');
+let cur=0;
+setInterval(()=>{
+  slides[cur].classList.remove('active');
+  cur=(cur+1)%slides.length;
+  slides[cur].classList.add('active');
+},5500);
+
+// Reveal
+const obs=new IntersectionObserver(es=>{
+  es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}});
+},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+// Lang
+function setLang(lang){
+  document.querySelectorAll('.lang-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelector(`.lang-btn[onclick="setLang('${lang}')"]`).classList.add('active');
+  document.querySelectorAll('[data-'+lang+']').forEach(el=>{
+    const t=el.getAttribute('data-'+lang);
+    if(el.matches('h1,h2')){el.innerHTML=t}else{el.textContent=t}
+  });
+}
+
+// Загрузка проектов портфолио из projects.json
+const ARROW_SVG='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function buildProjects(list){
+  const grid=document.getElementById('projGrid');
+  if(!grid)return;
+  grid.innerHTML='';
+  list.forEach((p,i)=>{
+    const num=String(i+1).padStart(2,'0');
+    const sub=[p.style,p.location,p.area?p.area+' м²':''].filter(Boolean).join(' · ');
+    const page=p.page || (p.slug?('projects/'+p.slug+'.html'):'#');
+    const card=document.createElement('a');
+    card.href=page;
+    card.className='proj-card reveal';
+    card.innerHTML=
+      '<img src="'+escapeHtml(p.cover)+'" alt="'+escapeHtml(p.title)+'">'+
+      '<div class="proj-ov">'+
+        '<div class="proj-num">'+num+'</div>'+
+        '<h3 class="proj-name">'+escapeHtml(p.title)+'</h3>'+
+        '<p class="proj-sub">'+escapeHtml(sub)+'</p>'+
+        '<span class="proj-btn">Смотреть проект'+ARROW_SVG+'</span>'+
+      '</div>';
+    grid.appendChild(card);
+    obs.observe(card);
+  });
+}
+fetch('projects.json')
+  .then(r=>r.ok?r.json():Promise.reject())
+  .then(data=>{
+    const list=Array.isArray(data)?data:(data.projects||[]);
+    // Сортировка по полю order, если оно есть
+    list.sort((a,b)=>(a.order??99)-(b.order??99));
+    buildProjects(list);
+  })
+  .catch(()=>{
+    const grid=document.getElementById('projGrid');
+    if(grid)grid.innerHTML='<p style="grid-column:1/-1;text-align:center;color:rgba(26,5,8,.5);padding:40px">Проекты загружаются…</p>';
+  });
+
+</script>
+<!-- Обработка приглашения/входа в админ-панель (Netlify Identity) -->
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<script>
+if(window.netlifyIdentity){
+  window.netlifyIdentity.on('init', user=>{
+    if(!user){
+      window.netlifyIdentity.on('login', ()=>{document.location.href='/admin/';});
+    }
+  });
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+{
+  "projects": [
+    {
+      "title": "Résidence Dorée",
+      "cover": "images/projects/residence-doree.jpg",
+      "style": "Неоклассика",
+      "area": 380,
+      "location": "",
+      "order": 1,
+      "page": "projects/residence-doree.html"
+    },
+    {
+      "title": "Lumière Naturelle",
+      "cover": "images/projects/lumiere-naturelle.jpg",
+      "style": "Минимализм",
+      "area": 107,
+      "location": "ЖК Parkwood",
+      "order": 2,
+      "page": "projects/lumiere-naturelle.html"
+    },
+    {
+      "title": "Bois & Lumière",
+      "cover": "images/projects/bois-lumiere.jpg",
+      "style": "Органика",
+      "area": 70,
+      "location": "Nova Stroy",
+      "order": 3,
+      "page": "projects/bois-lumiere.html"
+    },
+    {
+      "title": "Constellation",
+      "cover": "images/projects/constellation.jpg",
+      "style": "Современная классика",
+      "area": 285,
+      "location": "New Town",
+      "order": 4,
+      "page": "projects/constellation.html"
+    }
+  ]
+}
