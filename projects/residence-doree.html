@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Résidence Dorée — DECOROOMS</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',system-ui,sans-serif;background:#0E0304;color:#F5EDE3;overflow-x:hidden}
+img{display:block;width:100%}
+a{text-decoration:none;color:inherit}
+
+
+/* SLIDES */
+.slides{position:absolute;inset:0}
+.slide{position:absolute;inset:0;opacity:0;transition:opacity 1.6s cubic-bezier(.25,.1,.25,1)}
+.slide.active{opacity:1}
+.slide img{width:100%;height:100%;object-fit:cover;object-position:center}
+
+/* Slide dots */
+.slide-dots{
+  position:absolute;bottom:28px;left:48px;z-index:3;
+  display:flex;gap:8px;
+}
+.dot{
+  width:24px;height:2px;background:rgba(255,255,255,.3);
+  cursor:pointer;transition:background .3s,width .3s;
+}
+.dot.active{background:#fff;width:40px}
+
+/* NAV */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:16px 48px;
+  background:rgba(14,3,4,.92);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+.nav-logo img{height:88px;width:auto}
+.nav-back{
+  display:flex;align-items:center;gap:8px;
+  font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;
+  color:rgba(245,237,227,.55);transition:color .3s;
+}
+.nav-back:hover{color:#fff}
+.nav-back svg{width:16px;height:16px}
+.nav-cta{
+  font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;
+  color:#fff;border:1px solid rgba(255,255,255,.4);padding:8px 20px;
+  transition:background .3s;
+}
+.nav-cta:hover{background:rgba(255,255,255,.1)}
+
+/* HERO */
+.hero{
+  position:relative;height:100vh;overflow:hidden;
+  display:flex;align-items:flex-end;
+}
+.hero img{
+  position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover;object-position:center;
+}
+.hero-ov{
+  position:absolute;inset:0;
+  background:linear-gradient(to top, rgba(14,3,4,.85) 0%, rgba(14,3,4,.2) 50%, rgba(14,3,4,.15) 100%);
+}
+.hero-content{
+  position:relative;z-index:1;
+  padding:0 48px 64px;width:100%;
+  display:flex;justify-content:space-between;align-items:flex-end;
+}
+.hero-left .tag{
+  font-size:.67rem;letter-spacing:.28em;text-transform:uppercase;
+  color:rgba(245,237,227,.55);margin-bottom:14px;
+}
+.hero-title{
+  font-family:'Cormorant Garamond',Georgia,serif;
+  font-size:clamp(3rem,7vw,6rem);font-weight:300;
+  font-style:italic;line-height:1.05;color:#fff;
+  margin-bottom:8px;
+}
+.hero-subtitle{
+  font-family:'Cormorant Garamond',Georgia,serif;
+  font-size:1.1rem;font-weight:300;
+  color:rgba(245,237,227,.6);letter-spacing:.08em;
+}
+.hero-right{
+  text-align:right;
+  display:flex;flex-direction:column;gap:6px;
+  color:rgba(245,237,227,.45);font-size:.75rem;letter-spacing:.1em;
+}
+.hero-right span{color:rgba(245,237,227,.7)}
+.scroll-hint{
+  position:absolute;bottom:28px;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  color:rgba(255,255,255,.3);font-size:.62rem;letter-spacing:.15em;text-transform:uppercase;
+  z-index:2;
+}
+.sh-line{width:1px;height:44px;background:rgba(255,255,255,.15);overflow:hidden;position:relative}
+.sh-line::after{content:'';position:absolute;top:-100%;width:100%;height:100%;
+  background:#fff;animation:sa 2s 1s infinite}
+@keyframes sa{to{top:100%}}
+
+/* ABOUT PROJECT */
+.about-proj{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:80px;align-items:center;
+  padding:100px 48px;background:#0E0304;
+}
+.about-label{
+  font-size:.67rem;letter-spacing:.22em;text-transform:uppercase;
+  color:rgba(245,237,227,.4);margin-bottom:20px;
+}
+.about-title{
+  font-family:'Cormorant Garamond',Georgia,serif;
+  font-size:clamp(2rem,4vw,3rem);font-weight:300;
+  line-height:1.2;margin-bottom:28px;color:#fff;
+}
+.about-body{
+  font-family:'Cormorant Garamond',Georgia,serif;
+  font-size:1.1rem;font-weight:300;line-height:1.8;
+  color:rgba(245,237,227,.65);
+}
+.proj-specs{
+  display:grid;grid-template-columns:1fr 1fr;gap:32px;
+}
+.spec-item{border-top:1px solid rgba(255,255,255,.08);padding-top:20px}
+.spec-label{font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;
+  color:rgba(245,237,227,.35);margin-bottom:6px}
+.spec-value{font-family:'Cormorant Garamond',Georgia,serif;
+  font-size:1.2rem;color:#fff;}
+
+/* GALLERY */
+.gallery{padding:0 48px 100px;background:#0E0304}
+.gallery-label{
+  font-size:.67rem;letter-spacing:.22em;text-transform:uppercase;
+  color:rgba(245,237,227,.4);margin-bottom:40px;padding-top:60px;
+  border-top:1px solid rgba(255,255,255,.06);
+}
+.gallery-grid{display:grid;gap:10px}
+
+/* Row 1: 1 full-width tall image */
+.row1{grid-template-columns:1fr}
+.row1 .gcard{height:70vh;min-height:500px}
+
+/* Row 2: 2 equal */
+.row2{grid-template-columns:1fr 1fr;margin-top:10px}
+.row2 .gcard{height:55vh;min-height:380px}
+
+/* Row 3: 3:2 split */
+.row3{grid-template-columns:3fr 2fr;margin-top:10px}
+.row3 .gcard:first-child{height:60vh;min-height:420px}
+.row3 .gcard:last-child{height:60vh;min-height:420px}
+
+.gcard{position:relative;overflow:hidden;cursor:pointer}
+.gcard img{width:100%;height:100%;object-fit:cover;
+  transition:transform .9s cubic-bezier(.25,.1,.25,1)}
+.gcard:hover img{transform:scale(1.04)}
+.gcard-info{
+  position:absolute;bottom:0;left:0;right:0;
+  padding:28px 24px 20px;
+  background:linear-gradient(to top,rgba(14,3,4,.75) 0%,transparent 100%);
+  opacity:0;transition:opacity .4s;
+}
+.gcard:hover .gcard-info{opacity:1}
+.gcard-room{font-family:'Cormorant Garamond',Georgia,serif;
+  font-size:1.2rem;color:#fff}
+
+/* LIGHTBOX */
+#lightbox{
+  display:none;position:fixed;inset:0;z-index:999;
+  background:rgba(14,3,4,.96);
+  align-items:center;justify-content:center;
+  flex-direction:column;
+}
+#lightbox.open{display:flex}
+#lb-img{max-height:88vh;max-width:92vw;object-fit:contain;width:auto}
+.lb-close{
+  position:absolute;top:24px;right:32px;
+  font-size:2rem;color:rgba(255,255,255,.5);cursor:pointer;
+  transition:color .2s;line-height:1;
+}
+.lb-close:hover{color:#fff}
+.lb-nav{
+  position:absolute;top:50%;transform:translateY(-50%);
+  background:none;border:none;cursor:pointer;
+  color:rgba(255,255,255,.4);font-size:2.5rem;padding:16px;
+  transition:color .2s;
+}
+.lb-nav:hover{color:#fff}
+.lb-prev{left:16px}
+.lb-next{right:16px}
+.lb-count{
+  position:absolute;bottom:24px;left:50%;transform:translateX(-50%);
+  font-size:.72rem;letter-spacing:.2em;color:rgba(255,255,255,.4);
+}
+
+/* CTA */
+.cta-section{
+  padding:80px 48px;
+  background:#160507;
+  text-align:center;
+  border-top:1px solid rgba(255,255,255,.06);
+}
+.cta-title{
+  font-family:'Cormorant Garamond',Georgia,serif;
+  font-size:clamp(1.8rem,4vw,3rem);font-weight:300;
+  color:#fff;margin-bottom:12px;
+}
+.cta-sub{
+  font-size:.87rem;color:rgba(245,237,227,.5);
+  margin-bottom:36px;letter-spacing:.05em;
+}
+.cta-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.btn-w{
+  display:inline-flex;align-items:center;gap:9px;
+  background:#fff;color:#0E0304;
+  font-size:.74rem;font-weight:500;letter-spacing:.18em;
+  text-transform:uppercase;padding:14px 32px;transition:opacity .3s;
+}
+.btn-w:hover{opacity:.88}
+.btn-o{
+  display:inline-flex;align-items:center;gap:9px;
+  border:1px solid rgba(255,255,255,.3);color:#fff;
+  font-size:.74rem;letter-spacing:.18em;
+  text-transform:uppercase;padding:14px 32px;
+  transition:border-color .3s,background .3s;
+}
+.btn-o:hover{border-color:#fff;background:rgba(255,255,255,.06)}
+
+/* FOOTER */
+footer{
+  background:#0A0203;padding:32px 48px;
+  display:flex;justify-content:space-between;align-items:center;
+  border-top:1px solid rgba(255,255,255,.05);
+}
+footer img{height:30px;width:auto;opacity:.6}
+footer p{font-size:.72rem;color:rgba(245,237,227,.25)}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(24px);
+  transition:opacity .8s cubic-bezier(.25,.1,.25,1),transform .8s cubic-bezier(.25,.1,.25,1)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+@media(max-width:900px){
+  nav{padding:14px 20px}
+  .hero-content{padding:0 20px 48px;flex-direction:column;gap:20px;align-items:flex-start}
+  .about-proj{grid-template-columns:1fr;gap:40px;padding:72px 20px}
+  .gallery{padding:0 20px 72px}
+  .row2{grid-template-columns:1fr}
+  .row3{grid-template-columns:1fr}
+  .row2 .gcard,.row3 .gcard{height:55vw;min-height:220px}
+  .cta-section{padding:60px 20px}
+  footer{flex-direction:column;gap:16px;padding:24px 20px;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="decorooms.html" class="nav-back">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+      <path d="M19 12H5M5 12l7-7M5 12l7 7"/>
+    </svg>
+    Портфолио
+  </a>
+  <a href="decorooms.html" class="nav-logo">
+    <img src="../images/projects/residence-doree/img-01.png" alt="DECOROOMS">
+  </a>
+  <a href="tel:+998903533933" class="nav-cta">Связаться</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="slides" id="heroSlides">
+  <div class="slide active"><img src="../images/projects/residence-doree/img-02.jpg" alt="Кухня"></div>
+  <div class="slide"><img src="../images/projects/residence-doree/img-03.jpg" alt="Спальня 1"></div>
+  <div class="slide"><img src="../images/projects/residence-doree/img-04.jpg" alt="Спальня 2"></div>
+  <div class="slide"><img src="../images/projects/residence-doree/img-05.jpg" alt="Кабинет"></div>
+  <div class="slide"><img src="../images/projects/residence-doree/img-06.jpg" alt="Гостиная"></div>
+</div>
+  <div class="hero-ov"></div>
+  <div class="hero-content">
+    <div class="hero-left">
+      <div class="tag">DECOROOMS · Проект</div>
+      <h1 class="hero-title">Résidence Dorée</h1>
+      <p class="hero-subtitle">Золотая резиденция · Неоклассика</p>
+    </div>
+    <div class="hero-right">
+      <div>Стиль <span>Неоклассика</span></div>
+      <div>Город <span>Ташкент</span></div>
+      <div>Год <span>2024</span></div>
+    </div>
+  </div>
+  <div class="slide-dots" id="dots"></div>
+<div class="scroll-hint">
+    <div class="sh-line"></div>
+    <span>Смотреть</span>
+  </div>
+</section>
+
+<!-- ABOUT PROJECT -->
+<div class="about-proj">
+  <div class="reveal">
+    <div class="about-label">О проекте</div>
+    <h2 class="about-title">Роскошь<br>в каждой детали</h2>
+    <p class="about-body">Résidence Dorée — частная резиденция в Ташкенте, воплощающая европейскую неоклассику в её лучшем виде. Проект объединяет парадную кухню с хрустальной люстрой, кабинет с арочными нишами и библиотекой, гостиную с каминной стеной из золочёных полок и три спальни с авторской отделкой. Каждое пространство — отдельная история.</p>
+  </div>
+  <div class="proj-specs reveal">
+    <div class="spec-item">
+      <div class="spec-label">Стиль</div>
+      <div class="spec-value">Неоклассика</div>
+    </div>
+    <div class="spec-item">
+      <div class="spec-label">Площадь</div>
+      <div class="spec-value">от 380 м²</div>
+    </div>
+    <div class="spec-item">
+      <div class="spec-label">Помещения</div>
+      <div class="spec-value">5 зон</div>
+    </div>
+    <div class="spec-item">
+      <div class="spec-label">Год</div>
+      <div class="spec-value">2024</div>
+    </div>
+  </div>
+</div>
+
+<!-- GALLERY -->
+<div class="gallery">
+  <div class="gallery-label">Галерея проекта · 5 пространств</div>
+
+  <!-- Row 1: Спальня с картиной (главная, во всю ширину) -->
+  <div class="gallery-grid row1">
+    <div class="gcard reveal" onclick="openLb(0)">
+      <img src="../images/projects/residence-doree/img-07.jpg" alt="Спальня · Résidence Dorée">
+      <div class="gcard-info"><div class="gcard-room">Главная спальня</div></div>
+    </div>
+  </div>
+
+  <!-- Row 2: Спальня с зеркалами + Кабинет -->
+  <div class="gallery-grid row2">
+    <div class="gcard reveal" onclick="openLb(1)">
+      <img src="../images/projects/residence-doree/img-08.jpg" alt="Спальня 2 · Résidence Dorée">
+      <div class="gcard-info"><div class="gcard-room">Спальня · Sunburst</div></div>
+    </div>
+    <div class="gcard reveal" onclick="openLb(2)">
+      <img src="../images/projects/residence-doree/img-09.jpg" alt="Кабинет · Résidence Dorée">
+      <div class="gcard-info"><div class="gcard-room">Кабинет · Prestige</div></div>
+    </div>
+  </div>
+
+  <!-- Row 3: Гостиная с камином (широко) -->
+  <div class="gallery-grid row1">
+    <div class="gcard reveal" onclick="openLb(3)">
+      <img src="../images/projects/residence-doree/img-10.jpg" alt="Гостиная · Résidence Dorée">
+      <div class="gcard-info"><div class="gcard-room">Гостиная с камином</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- LIGHTBOX -->
+<div id="lightbox">
+  <span class="lb-close" onclick="closeLb()">×</span>
+  <button class="lb-nav lb-prev" onclick="lbNav(-1)">‹</button>
+  <img id="lb-img" src="" alt="">
+  <button class="lb-nav lb-next" onclick="lbNav(1)">›</button>
+  <div class="lb-count" id="lb-count"></div>
+</div>
+
+<!-- CTA -->
+<div class="cta-section">
+  <h2 class="cta-title">Хотите такой же проект?</h2>
+  <p class="cta-sub">Создадим резиденцию вашей мечты · Ташкент · Бесплатная консультация</p>
+  <div class="cta-btns">
+    <a href="https://t.me/+998903533933" class="btn-w">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12L8.32 14.617l-2.96-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.496.969z"/></svg>
+      Написать в Telegram
+    </a>
+    <a href="tel:+998903533933" class="btn-o">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+      +998 90 353 39 33
+    </a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <a href="decorooms.html"><img src="../images/projects/residence-doree/img-11.png" alt="DECOROOMS"></a>
+  <p>© 2024 DECOROOMS · Résidence Dorée · Tashkent</p>
+</footer>
+
+<script>
+
+// Hero slideshow
+const slides = document.querySelectorAll('.slide');
+const dotsContainer = document.getElementById('dots');
+let cur = 0;
+
+// Create dots
+slides.forEach((_, i) => {
+  const d = document.createElement('div');
+  d.className = 'dot' + (i===0?' active':'');
+  d.onclick = () => goTo(i);
+  dotsContainer.appendChild(d);
+});
+
+function goTo(n) {
+  slides[cur].classList.remove('active');
+  document.querySelectorAll('.dot')[cur].classList.remove('active');
+  cur = n;
+  slides[cur].classList.add('active');
+  document.querySelectorAll('.dot')[cur].classList.add('active');
+}
+
+setInterval(() => goTo((cur+1) % slides.length), 5000);
+
+// Gallery images for lightbox (in gallery order)
+const lbSrcs = [
+  document.querySelector('.row1 img').src,
+  document.querySelectorAll('.row2 img')[0].src,
+  document.querySelectorAll('.row2 img')[1].src,
+  document.querySelectorAll('.gallery-grid.row1')[1]?.querySelector('img').src
+].filter(Boolean);
+
+let lbIdx = 0;
+function openLb(i) {
+  lbIdx = i;
+  document.getElementById('lb-img').src = lbSrcs[i];
+  document.getElementById('lb-count').textContent = (i+1) + ' / ' + lbSrcs.length;
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeLb() {
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow='';
+}
+function lbNav(dir) {
+  lbIdx = (lbIdx + dir + lbSrcs.length) % lbSrcs.length;
+  document.getElementById('lb-img').src = lbSrcs[lbIdx];
+  document.getElementById('lb-count').textContent = (lbIdx+1) + ' / ' + lbSrcs.length;
+}
+document.getElementById('lightbox').addEventListener('click', function(e) {
+  if(e.target === this) closeLb();
+});
+document.addEventListener('keydown', e => {
+  if(e.key==='Escape') closeLb();
+  if(e.key==='ArrowRight') lbNav(1);
+  if(e.key==='ArrowLeft') lbNav(-1);
+});
+
+// Reveal
+const obs = new IntersectionObserver(es => {
+  es.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); obs.unobserve(e.target); } });
+}, {threshold:.08});
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>

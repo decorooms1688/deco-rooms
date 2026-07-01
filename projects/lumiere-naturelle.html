@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Lumière Naturelle — DECOROOMS</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',system-ui,sans-serif;background:#0C0C0A;color:#F0EBE3;overflow-x:hidden}
+img{display:block;width:100%} a{text-decoration:none;color:inherit}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 48px;background:rgba(12,12,10,.93);
+  backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,255,255,.05)}
+.nav-back{display:flex;align-items:center;gap:8px;font-size:.72rem;
+  letter-spacing:.18em;text-transform:uppercase;color:rgba(240,235,227,.5);transition:color .3s}
+.nav-back:hover{color:#fff}
+.nav-back svg{width:16px;height:16px}
+nav img{height:52px;width:auto}
+.nav-cta{font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;
+  color:#fff;border:1px solid rgba(255,255,255,.35);padding:8px 20px;transition:background .3s}
+.nav-cta:hover{background:rgba(255,255,255,.09)}
+
+/* HERO */
+.hero{position:relative;height:100vh;overflow:hidden;display:flex;align-items:flex-end}
+.slides{position:absolute;inset:0}
+.slide{position:absolute;inset:0;opacity:0;transition:opacity 1.8s cubic-bezier(.25,.1,.25,1)}
+.slide.active{opacity:1}
+.slide img{width:100%;height:100%;object-fit:cover}
+.hero-ov{position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(12,12,10,.88) 0%,rgba(12,12,10,.15) 55%,rgba(12,12,10,.1) 100%)}
+.hero-c{position:relative;z-index:1;padding:0 48px 60px;width:100%;
+  display:flex;justify-content:space-between;align-items:flex-end}
+.tag{font-size:.67rem;letter-spacing:.28em;text-transform:uppercase;
+  color:rgba(240,235,227,.45);margin-bottom:14px}
+.hero-title{font-family:'Cormorant Garamond',Georgia,serif;
+  font-size:clamp(2.8rem,7vw,5.8rem);font-weight:300;font-style:italic;
+  line-height:1.05;color:#fff;margin-bottom:8px}
+.hero-sub{font-family:'Cormorant Garamond',Georgia,serif;font-size:1.05rem;
+  font-weight:300;color:rgba(240,235,227,.55);letter-spacing:.08em}
+.hero-right{text-align:right;display:flex;flex-direction:column;gap:6px;
+  color:rgba(240,235,227,.4);font-size:.75rem;letter-spacing:.1em}
+.hero-right span{color:rgba(240,235,227,.75)}
+.slide-dots{position:absolute;bottom:26px;left:48px;z-index:3;display:flex;gap:7px}
+.dot{width:22px;height:2px;background:rgba(255,255,255,.25);cursor:pointer;
+  transition:background .3s,width .35s}
+.dot.active{background:#fff;width:38px}
+.scroll-hint{position:absolute;bottom:26px;right:48px;z-index:3;
+  display:flex;flex-direction:column;align-items:center;gap:9px;
+  color:rgba(255,255,255,.3);font-size:.62rem;letter-spacing:.15em;text-transform:uppercase}
+.sh-line{width:1px;height:42px;background:rgba(255,255,255,.12);overflow:hidden;position:relative}
+.sh-line::after{content:'';position:absolute;top:-100%;width:100%;height:100%;
+  background:#fff;animation:sa 2s 1.2s infinite}
+@keyframes sa{to{top:100%}}
+
+/* ABOUT */
+.about-p{display:grid;grid-template-columns:1fr 1fr;gap:80px;
+  align-items:center;padding:96px 48px;background:#0C0C0A}
+.about-label{font-size:.67rem;letter-spacing:.22em;text-transform:uppercase;
+  color:rgba(240,235,227,.35);margin-bottom:18px}
+.about-title{font-family:'Cormorant Garamond',Georgia,serif;
+  font-size:clamp(1.8rem,4vw,2.8rem);font-weight:300;line-height:1.2;
+  margin-bottom:26px;color:#fff}
+.about-body{font-family:'Cormorant Garamond',Georgia,serif;font-size:1.08rem;
+  font-weight:300;line-height:1.8;color:rgba(240,235,227,.58)}
+.specs{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+.spec{border-top:1px solid rgba(255,255,255,.07);padding-top:18px}
+.spec-l{font-size:.64rem;letter-spacing:.2em;text-transform:uppercase;
+  color:rgba(240,235,227,.3);margin-bottom:5px}
+.spec-v{font-family:'Cormorant Garamond',Georgia,serif;font-size:1.15rem;color:#fff}
+
+/* GALLERY */
+.gallery{padding:0 48px 96px;background:#0C0C0A}
+.gal-label{font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;
+  color:rgba(240,235,227,.3);margin-bottom:36px;padding-top:56px;
+  border-top:1px solid rgba(255,255,255,.05)}
+
+/* masonry-style grid */
+.gal-grid{display:grid;gap:8px;grid-template-columns:repeat(12,1fr)}
+
+/* Row layouts */
+.gcard{position:relative;overflow:hidden;cursor:pointer;grid-column:span 6;height:52vw;max-height:580px}
+.gcard.wide{grid-column:span 8;height:46vw;max-height:520px}
+.gcard.narrow{grid-column:span 4;height:46vw;max-height:520px}
+.gcard.third{grid-column:span 4;height:38vw;max-height:420px}
+.gcard.half{grid-column:span 6;height:42vw;max-height:480px}
+.gcard.full{grid-column:span 12;height:55vw;max-height:620px}
+
+.gcard img{width:100%;height:100%;object-fit:cover;
+  transition:transform .95s cubic-bezier(.25,.1,.25,1)}
+.gcard:hover img{transform:scale(1.045)}
+.gcard-info{position:absolute;bottom:0;left:0;right:0;
+  padding:24px 20px 18px;
+  background:linear-gradient(to top,rgba(12,12,10,.78) 0%,transparent 100%);
+  opacity:0;transition:opacity .4s}
+.gcard:hover .gcard-info{opacity:1}
+.gcard-room{font-family:'Cormorant Garamond',Georgia,serif;
+  font-size:1.1rem;color:#fff}
+.gcard-num{font-size:.62rem;letter-spacing:.15em;
+  color:rgba(255,255,255,.45);margin-bottom:4px}
+
+/* LIGHTBOX */
+#lb{display:none;position:fixed;inset:0;z-index:999;
+  background:rgba(12,12,10,.97);align-items:center;
+  justify-content:center;flex-direction:column}
+#lb.open{display:flex}
+#lb-img{max-height:90vh;max-width:94vw;object-fit:contain;width:auto}
+.lb-x{position:absolute;top:22px;right:28px;font-size:2rem;
+  color:rgba(255,255,255,.45);cursor:pointer;transition:color .2s;line-height:1}
+.lb-x:hover{color:#fff}
+.lb-btn{position:absolute;top:50%;transform:translateY(-50%);
+  background:none;border:none;cursor:pointer;
+  color:rgba(255,255,255,.35);font-size:2.4rem;padding:16px;transition:color .2s}
+.lb-btn:hover{color:#fff}
+.lb-p{left:12px} .lb-n{right:12px}
+.lb-c{position:absolute;bottom:22px;left:50%;transform:translateX(-50%);
+  font-size:.7rem;letter-spacing:.2em;color:rgba(255,255,255,.35)}
+
+/* CTA */
+.cta{padding:76px 48px;background:#0F0F0C;text-align:center;
+  border-top:1px solid rgba(255,255,255,.05)}
+.cta-t{font-family:'Cormorant Garamond',Georgia,serif;
+  font-size:clamp(1.8rem,4vw,3rem);font-weight:300;color:#fff;margin-bottom:12px}
+.cta-s{font-size:.86rem;color:rgba(240,235,227,.45);margin-bottom:34px;letter-spacing:.05em}
+.btns{display:flex;gap:13px;justify-content:center;flex-wrap:wrap}
+.btn-w{display:inline-flex;align-items:center;gap:9px;background:#fff;color:#0C0C0A;
+  font-size:.73rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;
+  padding:13px 30px;transition:opacity .3s}
+.btn-w:hover{opacity:.88}
+.btn-o{display:inline-flex;align-items:center;gap:9px;
+  border:1px solid rgba(255,255,255,.28);color:#fff;font-size:.73rem;
+  letter-spacing:.18em;text-transform:uppercase;padding:13px 30px;transition:border-color .3s}
+.btn-o:hover{border-color:#fff}
+
+footer{background:#080807;padding:28px 48px;display:flex;
+  justify-content:space-between;align-items:center;border-top:1px solid rgba(255,255,255,.04)}
+footer img{height:32px;width:auto;opacity:.55}
+footer p{font-size:.7rem;color:rgba(240,235,227,.22)}
+
+.reveal{opacity:0;transform:translateY(22px);
+  transition:opacity .8s cubic-bezier(.25,.1,.25,1),transform .8s cubic-bezier(.25,.1,.25,1)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+@media(max-width:900px){
+  nav{padding:13px 18px}
+  nav img{height:40px}
+  .hero-c{padding:0 18px 46px;flex-direction:column;gap:18px;align-items:flex-start}
+  .slide-dots{left:18px} .scroll-hint{right:18px}
+  .about-p{grid-template-columns:1fr;gap:36px;padding:68px 18px}
+  .gallery{padding:0 18px 68px}
+  .gcard,.gcard.wide,.gcard.narrow,.gcard.third,.gcard.half,.gcard.full{
+    grid-column:span 12;height:65vw;max-height:none}
+  .cta{padding:56px 18px}
+  footer{flex-direction:column;gap:14px;padding:22px 18px;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="decorooms.html" class="nav-back">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+      <path d="M19 12H5M5 12l7-7M5 12l7 7"/>
+    </svg>Портфолио
+  </a>
+  <a href="decorooms.html"><img src="../images/projects/lumiere-naturelle/img-01.png" alt="DECOROOMS"></a>
+  <a href="tel:+998903533933" class="nav-cta">Связаться</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="slides" id="heroSlides">
+  <div class="slide  active"><img src="../images/projects/lumiere-naturelle/img-02.jpg" alt="slide 1"></div>
+  <div class="slide"><img src="../images/projects/lumiere-naturelle/img-03.jpg" alt="slide 2"></div>
+  <div class="slide"><img src="../images/projects/lumiere-naturelle/img-04.jpg" alt="slide 3"></div>
+  <div class="slide"><img src="../images/projects/lumiere-naturelle/img-05.jpg" alt="slide 4"></div>
+  <div class="slide"><img src="../images/projects/lumiere-naturelle/img-06.jpg" alt="slide 5"></div>
+  <div class="slide"><img src="../images/projects/lumiere-naturelle/img-07.jpg" alt="slide 6"></div>
+  <div class="slide"><img src="../images/projects/lumiere-naturelle/img-08.jpg" alt="slide 7"></div>
+  <div class="slide"><img src="../images/projects/lumiere-naturelle/img-09.jpg" alt="slide 8"></div>
+  <div class="slide"><img src="../images/projects/lumiere-naturelle/img-10.jpg" alt="slide 9"></div>
+  <div class="slide"><img src="../images/projects/lumiere-naturelle/img-11.jpg" alt="slide 10"></div>
+  </div>
+  <div class="hero-ov"></div>
+  <div class="slide-dots" id="dots"></div>
+  <div class="hero-c">
+    <div>
+      <div class="tag">DECOROOMS · ЖК Parkwood · 107 м²</div>
+      <h1 class="hero-title">Lumière Naturelle</h1>
+      <p class="hero-sub">Естественный свет · Современный минимализм</p>
+    </div>
+    <div class="hero-right">
+      <div>Стиль <span>Минимализм</span></div>
+      <div>Площадь <span>107 м²</span></div>
+      <div>ЖК <span>Parkwood</span></div>
+      <div>Год <span>2024</span></div>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <div class="sh-line"></div>
+    <span>Смотреть</span>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<div class="about-p">
+  <div class="reveal">
+    <div class="about-label">О проекте</div>
+    <h2 class="about-title">Свет как<br>главный материал</h2>
+    <p class="about-body">Lumière Naturelle — квартира в ЖК Parkwood, где тёплый естественный свет стал центральной идеей. Мрамор с тонкими прожилками, кремовые фасады, натуральное дерево и чёрные акценты — всё работает на ощущение пространства, тепла и уюта. 107 квадратных метров, в которых нет ничего лишнего.</p>
+  </div>
+  <div class="specs reveal">
+    <div class="spec"><div class="spec-l">Стиль</div><div class="spec-v">Современный минимализм</div></div>
+    <div class="spec"><div class="spec-l">Площадь</div><div class="spec-v">107 м²</div></div>
+    <div class="spec"><div class="spec-l">Помещений</div><div class="spec-v">10 зон</div></div>
+    <div class="spec"><div class="spec-l">ЖК</div><div class="spec-v">Parkwood, Ташкент</div></div>
+  </div>
+</div>
+
+<!-- GALLERY -->
+<div class="gallery">
+  <div class="gal-label">Галерея · 10 пространств</div>
+  <div class="gal-grid">
+    <div class="gcard wide reveal" onclick="openLb(0)">
+      <img src="../images/projects/lumiere-naturelle/img-12.jpg" alt="Гостиная · Общий вид">
+      <div class="gcard-info">
+        <div class="gcard-num">01</div>
+        <div class="gcard-room">Гостиная · Общий вид</div>
+      </div>
+    </div>
+    <div class="gcard narrow reveal" onclick="openLb(1)">
+      <img src="../images/projects/lumiere-naturelle/img-13.jpg" alt="Кухня · Общий вид">
+      <div class="gcard-info">
+        <div class="gcard-num">02</div>
+        <div class="gcard-room">Кухня · Общий вид</div>
+      </div>
+    </div>
+    <div class="gcard half reveal" onclick="openLb(2)">
+      <img src="../images/projects/lumiere-naturelle/img-14.jpg" alt="Ванная · Ванна">
+      <div class="gcard-info">
+        <div class="gcard-num">03</div>
+        <div class="gcard-room">Ванная · Ванна</div>
+      </div>
+    </div>
+    <div class="gcard half reveal" onclick="openLb(3)">
+      <img src="../images/projects/lumiere-naturelle/img-15.jpg" alt="Спальня">
+      <div class="gcard-info">
+        <div class="gcard-num">04</div>
+        <div class="gcard-room">Спальня</div>
+      </div>
+    </div>
+    <div class="gcard third reveal" onclick="openLb(4)">
+      <img src="../images/projects/lumiere-naturelle/img-16.jpg" alt="Кухня · Остров">
+      <div class="gcard-info">
+        <div class="gcard-num">05</div>
+        <div class="gcard-room">Кухня · Остров</div>
+      </div>
+    </div>
+    <div class="gcard third reveal" onclick="openLb(5)">
+      <img src="../images/projects/lumiere-naturelle/img-17.jpg" alt="Столовая · Люстра">
+      <div class="gcard-info">
+        <div class="gcard-num">06</div>
+        <div class="gcard-room">Столовая · Люстра</div>
+      </div>
+    </div>
+    <div class="gcard third reveal" onclick="openLb(6)">
+      <img src="../images/projects/lumiere-naturelle/img-18.jpg" alt="Гостиная · ТВ-зона">
+      <div class="gcard-info">
+        <div class="gcard-num">07</div>
+        <div class="gcard-room">Гостиная · ТВ-зона</div>
+      </div>
+    </div>
+    <div class="gcard half reveal" onclick="openLb(7)">
+      <img src="../images/projects/lumiere-naturelle/img-19.jpg" alt="Ванная · Зеркало">
+      <div class="gcard-info">
+        <div class="gcard-num">08</div>
+        <div class="gcard-room">Ванная · Зеркало</div>
+      </div>
+    </div>
+    <div class="gcard half reveal" onclick="openLb(8)">
+      <img src="../images/projects/lumiere-naturelle/img-20.jpg" alt="Мастер-ванная">
+      <div class="gcard-info">
+        <div class="gcard-num">09</div>
+        <div class="gcard-room">Мастер-ванная</div>
+      </div>
+    </div>
+    <div class="gcard full reveal" onclick="openLb(9)">
+      <img src="../images/projects/lumiere-naturelle/img-21.jpg" alt="Постирочная">
+      <div class="gcard-info">
+        <div class="gcard-num">010</div>
+        <div class="gcard-room">Постирочная</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- LIGHTBOX -->
+<div id="lb">
+  <span class="lb-x" onclick="closeLb()">×</span>
+  <button class="lb-btn lb-p" onclick="lbNav(-1)">‹</button>
+  <img id="lb-img" src="" alt="">
+  <button class="lb-btn lb-n" onclick="lbNav(1)">›</button>
+  <div class="lb-c" id="lb-c"></div>
+</div>
+
+<!-- CTA -->
+<div class="cta">
+  <h2 class="cta-t">Хотите такой же проект?</h2>
+  <p class="cta-s">Создадим вашу Lumière · Ташкент · Бесплатная консультация</p>
+  <div class="btns">
+    <a href="https://t.me/+998903533933" class="btn-w">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12L8.32 14.617l-2.96-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.496.969z"/></svg>
+      Написать в Telegram
+    </a>
+    <a href="tel:+998903533933" class="btn-o">+998 90 353 39 33</a>
+  </div>
+</div>
+
+<footer>
+  <a href="decorooms.html"><img src="../images/projects/lumiere-naturelle/img-22.png" alt="DECOROOMS"></a>
+  <p>© 2024 DECOROOMS · Lumière Naturelle · Parkwood · Tashkent</p>
+</footer>
+
+<script>
+// Hero slideshow
+const slides = document.querySelectorAll('.slide');
+const dotsEl = document.getElementById('dots');
+let cur = 0;
+slides.forEach((_,i) => {
+  const d = document.createElement('div');
+  d.className = 'dot'+(i===0?' active':'');
+  d.onclick = () => goTo(i);
+  dotsEl.appendChild(d);
+});
+function goTo(n) {
+  slides[cur].classList.remove('active');
+  document.querySelectorAll('.dot')[cur].classList.remove('active');
+  cur = n;
+  slides[cur].classList.add('active');
+  document.querySelectorAll('.dot')[cur].classList.add('active');
+}
+setInterval(() => goTo((cur+1)%slides.length), 4800);
+
+// Lightbox
+const lbImgs = Array.from(document.querySelectorAll('.gcard img')).map(i=>i.src);
+let li = 0;
+function openLb(i) {
+  li = i;
+  document.getElementById('lb-img').src = lbImgs[i];
+  document.getElementById('lb-c').textContent = (i+1)+' / '+lbImgs.length;
+  document.getElementById('lb').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeLb() {
+  document.getElementById('lb').classList.remove('open');
+  document.body.style.overflow='';
+}
+function lbNav(d) {
+  li = (li+d+lbImgs.length)%lbImgs.length;
+  document.getElementById('lb-img').src = lbImgs[li];
+  document.getElementById('lb-c').textContent = (li+1)+' / '+lbImgs.length;
+}
+document.getElementById('lb').addEventListener('click',e=>{if(e.target===e.currentTarget)closeLb()});
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape')closeLb();
+  if(e.key==='ArrowRight')lbNav(1);
+  if(e.key==='ArrowLeft')lbNav(-1);
+});
+
+// Reveal
+const obs = new IntersectionObserver(es=>{
+  es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}});
+},{threshold:.07});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>

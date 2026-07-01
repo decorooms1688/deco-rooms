@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Bois & Lumière — DECOROOMS</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:wght@300;400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',system-ui,sans-serif;background:#0E0C08;color:#F2EBE0;overflow-x:hidden}
+img{display:block;width:100%} a{text-decoration:none;color:inherit}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 48px;background:rgba(14,12,8,.94);
+  backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,255,255,.05)}
+.nav-back{display:flex;align-items:center;gap:8px;font-size:.72rem;
+  letter-spacing:.18em;text-transform:uppercase;color:rgba(242,235,224,.45);transition:color .3s}
+.nav-back:hover{color:#fff}
+.nav-back svg{width:16px;height:16px}
+nav img{height:52px;width:auto}
+.nav-cta{font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;
+  color:#fff;border:1px solid rgba(255,255,255,.3);padding:8px 20px;transition:background .3s}
+.nav-cta:hover{background:rgba(255,255,255,.08)}
+
+.hero{position:relative;height:100vh;overflow:hidden;display:flex;align-items:flex-end}
+.slides{position:absolute;inset:0}
+.slide{position:absolute;inset:0;opacity:0;transition:opacity 1.8s cubic-bezier(.25,.1,.25,1)}
+.slide.active{opacity:1}
+.slide img{width:100%;height:100%;object-fit:cover}
+.hero-ov{position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(14,12,8,.9) 0%,rgba(14,12,8,.2) 55%,rgba(14,12,8,.08) 100%)}
+.hero-c{position:relative;z-index:1;padding:0 48px 58px;width:100%;
+  display:flex;justify-content:space-between;align-items:flex-end}
+.tag{font-size:.67rem;letter-spacing:.28em;text-transform:uppercase;
+  color:rgba(242,235,224,.4);margin-bottom:14px}
+.hero-title{font-family:'Cormorant Garamond',Georgia,serif;
+  font-size:clamp(2.8rem,7vw,5.8rem);font-weight:300;font-style:italic;
+  line-height:1.04;color:#fff;margin-bottom:8px}
+.hero-sub{font-family:'Cormorant Garamond',Georgia,serif;font-size:1.05rem;
+  font-weight:300;color:rgba(242,235,224,.5);letter-spacing:.08em}
+.hero-right{text-align:right;display:flex;flex-direction:column;gap:6px;
+  color:rgba(242,235,224,.38);font-size:.75rem;letter-spacing:.1em}
+.hero-right span{color:rgba(242,235,224,.75)}
+.dots{position:absolute;bottom:26px;left:48px;z-index:3;display:flex;gap:7px}
+.dot{width:20px;height:2px;background:rgba(255,255,255,.22);cursor:pointer;
+  transition:background .3s,width .35s}
+.dot.active{background:#fff;width:36px}
+.scroll-h{position:absolute;bottom:26px;right:48px;z-index:3;
+  display:flex;flex-direction:column;align-items:center;gap:9px;
+  color:rgba(255,255,255,.28);font-size:.62rem;letter-spacing:.15em;text-transform:uppercase}
+.sh-l{width:1px;height:42px;background:rgba(255,255,255,.1);overflow:hidden;position:relative}
+.sh-l::after{content:'';position:absolute;top:-100%;width:100%;height:100%;
+  background:#fff;animation:sa 2s 1.2s infinite}
+@keyframes sa{to{top:100%}}
+
+.about-p{display:grid;grid-template-columns:1fr 1fr;gap:80px;
+  align-items:center;padding:96px 48px;background:#0E0C08}
+.al{font-size:.67rem;letter-spacing:.22em;text-transform:uppercase;
+  color:rgba(242,235,224,.3);margin-bottom:18px}
+.at{font-family:'Cormorant Garamond',Georgia,serif;
+  font-size:clamp(1.8rem,4vw,2.8rem);font-weight:300;line-height:1.2;
+  margin-bottom:26px;color:#fff}
+.ab{font-family:'Cormorant Garamond',Georgia,serif;font-size:1.08rem;
+  font-weight:300;line-height:1.8;color:rgba(242,235,224,.55)}
+.specs{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+.spec{border-top:1px solid rgba(255,255,255,.06);padding-top:18px}
+.spec-l{font-size:.64rem;letter-spacing:.2em;text-transform:uppercase;
+  color:rgba(242,235,224,.28);margin-bottom:5px}
+.spec-v{font-family:'Cormorant Garamond',Georgia,serif;font-size:1.15rem;color:#fff}
+
+.gallery{padding:0 48px 96px;background:#0E0C08}
+.gl{font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;
+  color:rgba(242,235,224,.28);margin-bottom:36px;padding-top:56px;
+  border-top:1px solid rgba(255,255,255,.05)}
+.gg{display:grid;gap:8px;grid-template-columns:repeat(12,1fr)}
+
+.gcard{position:relative;overflow:hidden;cursor:pointer}
+.gcard.wide{grid-column:span 12;height:55vw;max-height:600px}
+.gcard.half{grid-column:span 6;height:44vw;max-height:500px}
+.gcard.third{grid-column:span 4;height:56vw;max-height:560px}
+.gcard img{width:100%;height:100%;object-fit:cover;
+  transition:transform .95s cubic-bezier(.25,.1,.25,1)}
+.gcard:hover img{transform:scale(1.045)}
+.gi{position:absolute;bottom:0;left:0;right:0;padding:22px 20px 16px;
+  background:linear-gradient(to top,rgba(14,12,8,.8) 0%,transparent 100%);
+  opacity:0;transition:opacity .4s}
+.gcard:hover .gi{opacity:1}
+.gn{font-size:.62rem;letter-spacing:.15em;color:rgba(255,255,255,.4);margin-bottom:3px}
+.gr{font-family:'Cormorant Garamond',Georgia,serif;font-size:1.1rem;color:#fff}
+
+#lb{display:none;position:fixed;inset:0;z-index:999;
+  background:rgba(14,12,8,.97);align-items:center;justify-content:center;flex-direction:column}
+#lb.open{display:flex}
+#lb-img{max-height:90vh;max-width:94vw;object-fit:contain;width:auto}
+.lx{position:absolute;top:22px;right:28px;font-size:2rem;
+  color:rgba(255,255,255,.4);cursor:pointer;transition:color .2s;line-height:1}
+.lx:hover{color:#fff}
+.lb{position:absolute;top:50%;transform:translateY(-50%);
+  background:none;border:none;cursor:pointer;
+  color:rgba(255,255,255,.32);font-size:2.4rem;padding:16px;transition:color .2s}
+.lb:hover{color:#fff}
+.lp{left:12px} .ln{right:12px}
+.lc{position:absolute;bottom:22px;left:50%;transform:translateX(-50%);
+  font-size:.7rem;letter-spacing:.2em;color:rgba(255,255,255,.32)}
+
+.cta{padding:76px 48px;background:#110F0A;text-align:center;
+  border-top:1px solid rgba(255,255,255,.05)}
+.ct{font-family:'Cormorant Garamond',Georgia,serif;
+  font-size:clamp(1.8rem,4vw,3rem);font-weight:300;color:#fff;margin-bottom:12px}
+.cs{font-size:.86rem;color:rgba(242,235,224,.42);margin-bottom:34px;letter-spacing:.05em}
+.btns{display:flex;gap:13px;justify-content:center;flex-wrap:wrap}
+.bw{display:inline-flex;align-items:center;gap:9px;background:#fff;color:#0E0C08;
+  font-size:.73rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;
+  padding:13px 30px;transition:opacity .3s}
+.bw:hover{opacity:.88}
+.bo{display:inline-flex;align-items:center;gap:9px;
+  border:1px solid rgba(255,255,255,.25);color:#fff;font-size:.73rem;
+  letter-spacing:.18em;text-transform:uppercase;padding:13px 30px;transition:border-color .3s}
+.bo:hover{border-color:#fff}
+
+footer{background:#0A0908;padding:28px 48px;display:flex;
+  justify-content:space-between;align-items:center;border-top:1px solid rgba(255,255,255,.04)}
+footer img{height:32px;width:auto;opacity:.5}
+footer p{font-size:.7rem;color:rgba(242,235,224,.2)}
+
+.reveal{opacity:0;transform:translateY(22px);
+  transition:opacity .8s cubic-bezier(.25,.1,.25,1),transform .8s cubic-bezier(.25,.1,.25,1)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+@media(max-width:900px){
+  nav{padding:13px 18px} nav img{height:40px}
+  .hero-c{padding:0 18px 44px;flex-direction:column;gap:16px;align-items:flex-start}
+  .dots{left:18px} .scroll-h{right:18px}
+  .about-p{grid-template-columns:1fr;gap:36px;padding:68px 18px}
+  .gallery{padding:0 18px 68px}
+  .gcard.wide,.gcard.half,.gcard.third{grid-column:span 12;height:65vw;max-height:none}
+  .cta{padding:56px 18px}
+  footer{flex-direction:column;gap:14px;padding:22px 18px;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="decorooms.html" class="nav-back">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+      <path d="M19 12H5M5 12l7-7M5 12l7 7"/>
+    </svg>Портфолио
+  </a>
+  <a href="decorooms.html"><img src="../images/projects/bois-lumiere/img-01.png" alt="DECOROOMS"></a>
+  <a href="tel:+998903533933" class="nav-cta">Связаться</a>
+</nav>
+
+<section class="hero">
+  <div class="slides" id="heroSlides">
+  <div class="slide  active"><img src="../images/projects/bois-lumiere/img-02.jpg" alt="slide 1"></div>
+  <div class="slide"><img src="../images/projects/bois-lumiere/img-03.jpg" alt="slide 2"></div>
+  <div class="slide"><img src="../images/projects/bois-lumiere/img-04.jpg" alt="slide 3"></div>
+  <div class="slide"><img src="../images/projects/bois-lumiere/img-05.jpg" alt="slide 4"></div>
+  <div class="slide"><img src="../images/projects/bois-lumiere/img-06.jpg" alt="slide 5"></div>
+  <div class="slide"><img src="../images/projects/bois-lumiere/img-07.jpg" alt="slide 6"></div>
+  <div class="slide"><img src="../images/projects/bois-lumiere/img-08.jpg" alt="slide 7"></div>
+  <div class="slide"><img src="../images/projects/bois-lumiere/img-09.jpg" alt="slide 8"></div>
+  <div class="slide"><img src="../images/projects/bois-lumiere/img-10.jpg" alt="slide 9"></div>
+  <div class="slide"><img src="../images/projects/bois-lumiere/img-11.jpg" alt="slide 10"></div>
+  <div class="slide"><img src="../images/projects/bois-lumiere/img-12.jpg" alt="slide 11"></div>
+  <div class="slide"><img src="../images/projects/bois-lumiere/img-13.jpg" alt="slide 12"></div>
+  <div class="slide"><img src="../images/projects/bois-lumiere/img-14.jpg" alt="slide 13"></div>
+  <div class="slide"><img src="../images/projects/bois-lumiere/img-15.jpg" alt="slide 14"></div>
+  </div>
+  <div class="hero-ov"></div>
+  <div class="dots" id="dots"></div>
+  <div class="hero-c">
+    <div>
+      <div class="tag">DECOROOMS · ЖК Nova Stroy Parkentskiy · 70 м²</div>
+      <h1 class="hero-title">Bois & Lumière</h1>
+      <p class="hero-sub">Дерево и Свет · Органический минимализм</p>
+    </div>
+    <div class="hero-right">
+      <div>Стиль <span>Органический минимализм</span></div>
+      <div>Площадь <span>70 м²</span></div>
+      <div>ЖК <span>Nova Stroy Parkentskiy</span></div>
+      <div>Год <span>2024</span></div>
+    </div>
+  </div>
+  <div class="scroll-h">
+    <div class="sh-l"></div>
+    <span>Смотреть</span>
+  </div>
+</section>
+
+<div class="about-p">
+  <div class="reveal">
+    <div class="al">О проекте</div>
+    <h2 class="at">Тепло дерева,<br>поток света</h2>
+    <p class="ab">Bois & Lumière — квартира в ЖК Nova Stroy Parkentskiy, где натуральный орех встречается с мягким дневным светом. Wishbone-стулья, тёплый паркет ёлочкой, органические формы мебели — каждая деталь создаёт ощущение живого, дышащего пространства. 70 квадратных метров, наполненных теплом и уютом.</p>
+  </div>
+  <div class="specs reveal">
+    <div class="spec"><div class="spec-l">Стиль</div><div class="spec-v">Органический минимализм</div></div>
+    <div class="spec"><div class="spec-l">Площадь</div><div class="spec-v">70 м²</div></div>
+    <div class="spec"><div class="spec-l">Помещений</div><div class="spec-v">14 зон</div></div>
+    <div class="spec"><div class="spec-l">ЖК</div><div class="spec-v">Nova Stroy Parkentskiy</div></div>
+  </div>
+</div>
+
+<div class="gallery">
+  <div class="gl">Галерея · 14 пространств</div>
+  <div class="gg">
+    <div class="gcard wide reveal" onclick="openLb(0)">
+      <img src="../images/projects/bois-lumiere/img-16.jpg" alt="Гостиная · Общий вид">
+      <div class="gi"><div class="gn">01</div><div class="gr">Гостиная · Общий вид</div></div>
+    </div>
+    <div class="gcard wide reveal" onclick="openLb(1)">
+      <img src="../images/projects/bois-lumiere/img-17.jpg" alt="Гостиная · ТВ-зона">
+      <div class="gi"><div class="gn">02</div><div class="gr">Гостиная · ТВ-зона</div></div>
+    </div>
+    <div class="gcard half reveal" onclick="openLb(2)">
+      <img src="../images/projects/bois-lumiere/img-18.jpg" alt="Столовая">
+      <div class="gi"><div class="gn">03</div><div class="gr">Столовая</div></div>
+    </div>
+    <div class="gcard half reveal" onclick="openLb(3)">
+      <img src="../images/projects/bois-lumiere/img-19.jpg" alt="Кухня · Обеденная зона">
+      <div class="gi"><div class="gn">04</div><div class="gr">Кухня · Обеденная зона</div></div>
+    </div>
+    <div class="gcard wide reveal" onclick="openLb(4)">
+      <img src="../images/projects/bois-lumiere/img-20.jpg" alt="Гостиная · Вид сверху">
+      <div class="gi"><div class="gn">05</div><div class="gr">Гостиная · Вид сверху</div></div>
+    </div>
+    <div class="gcard half reveal" onclick="openLb(5)">
+      <img src="../images/projects/bois-lumiere/img-21.jpg" alt="Спальня">
+      <div class="gi"><div class="gn">06</div><div class="gr">Спальня</div></div>
+    </div>
+    <div class="gcard half reveal" onclick="openLb(6)">
+      <img src="../images/projects/bois-lumiere/img-22.jpg" alt="Спальня · Деталь">
+      <div class="gi"><div class="gn">07</div><div class="gr">Спальня · Деталь</div></div>
+    </div>
+    <div class="gcard half reveal" onclick="openLb(7)">
+      <img src="../images/projects/bois-lumiere/img-23.jpg" alt="Гардероб · Вид">
+      <div class="gi"><div class="gn">08</div><div class="gr">Гардероб · Вид</div></div>
+    </div>
+    <div class="gcard half reveal" onclick="openLb(8)">
+      <img src="../images/projects/bois-lumiere/img-24.jpg" alt="Прихожая · Гардероб">
+      <div class="gi"><div class="gn">09</div><div class="gr">Прихожая · Гардероб</div></div>
+    </div>
+    <div class="gcard wide reveal" onclick="openLb(9)">
+      <img src="../images/projects/bois-lumiere/img-25.jpg" alt="Коридор">
+      <div class="gi"><div class="gn">010</div><div class="gr">Коридор</div></div>
+    </div>
+    <div class="gcard third reveal" onclick="openLb(10)">
+      <img src="../images/projects/bois-lumiere/img-26.jpg" alt="Ванная · Камень">
+      <div class="gi"><div class="gn">011</div><div class="gr">Ванная · Камень</div></div>
+    </div>
+    <div class="gcard third reveal" onclick="openLb(11)">
+      <img src="../images/projects/bois-lumiere/img-27.jpg" alt="Ванная · Душ">
+      <div class="gi"><div class="gn">012</div><div class="gr">Ванная · Душ</div></div>
+    </div>
+    <div class="gcard third reveal" onclick="openLb(12)">
+      <img src="../images/projects/bois-lumiere/img-28.jpg" alt="Душ · Rain">
+      <div class="gi"><div class="gn">013</div><div class="gr">Душ · Rain</div></div>
+    </div>
+    <div class="gcard half reveal" onclick="openLb(13)">
+      <img src="../images/projects/bois-lumiere/img-29.jpg" alt="Ванная · Раковина">
+      <div class="gi"><div class="gn">014</div><div class="gr">Ванная · Раковина</div></div>
+    </div>
+  </div>
+</div>
+
+<div id="lb">
+  <span class="lx" onclick="closeLb()">×</span>
+  <button class="lb lp" onclick="lbNav(-1)">‹</button>
+  <img id="lb-img" src="" alt="">
+  <button class="lb ln" onclick="lbNav(1)">›</button>
+  <div class="lc" id="lc"></div>
+</div>
+
+<div class="cta">
+  <h2 class="ct">Хотите такой же проект?</h2>
+  <p class="cs">Создадим ваш Bois & Lumière · Ташкент · Бесплатная консультация</p>
+  <div class="btns">
+    <a href="https://t.me/+998903533933" class="bw">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12L8.32 14.617l-2.96-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.496.969z"/></svg>
+      Написать в Telegram
+    </a>
+    <a href="tel:+998903533933" class="bo">+998 90 353 39 33</a>
+  </div>
+</div>
+
+<footer>
+  <a href="decorooms.html"><img src="../images/projects/bois-lumiere/img-30.png" alt="DECOROOMS"></a>
+  <p>© 2024 DECOROOMS · Bois & Lumière · Nova Stroy Parkentskiy · Tashkent</p>
+</footer>
+
+<script>
+const slides=document.querySelectorAll('.slide'),dotsEl=document.getElementById('dots');
+let cur=0;
+slides.forEach((_,i)=>{const d=document.createElement('div');d.className='dot'+(i===0?' active':'');d.onclick=()=>goTo(i);dotsEl.appendChild(d);});
+function goTo(n){slides[cur].classList.remove('active');document.querySelectorAll('.dot')[cur].classList.remove('active');cur=n;slides[cur].classList.add('active');document.querySelectorAll('.dot')[cur].classList.add('active');}
+setInterval(()=>goTo((cur+1)%slides.length),4800);
+
+const lbImgs=Array.from(document.querySelectorAll('.gcard img')).map(i=>i.src);
+let li=0;
+function openLb(i){li=i;document.getElementById('lb-img').src=lbImgs[i];document.getElementById('lc').textContent=(i+1)+' / '+lbImgs.length;document.getElementById('lb').classList.add('open');document.body.style.overflow='hidden';}
+function closeLb(){document.getElementById('lb').classList.remove('open');document.body.style.overflow='';}
+function lbNav(d){li=(li+d+lbImgs.length)%lbImgs.length;document.getElementById('lb-img').src=lbImgs[li];document.getElementById('lc').textContent=(li+1)+' / '+lbImgs.length;}
+document.getElementById('lb').addEventListener('click',e=>{if(e.target===e.currentTarget)closeLb()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLb();if(e.key==='ArrowRight')lbNav(1);if(e.key==='ArrowLeft')lbNav(-1);});
+
+const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}});},{threshold:.07});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
