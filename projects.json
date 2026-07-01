@@ -35,6 +35,17 @@
       "location": "New Town",
       "order": 4,
       "page": "projects/constellation.html"
+    },
+    {
+      "order": 99,
+      "title": "Noir & Corail",
+      "cover": "/images/uploads/black-pink-2-.jpg",
+      "style": "Dark Contemporary ",
+      "area": 70,
+      "location": "ЖК «Prime Park»",
+      "gallery": [
+        "/images/uploads/black-pink-8-.jpg"
+      ]
     }
   ]
 }
